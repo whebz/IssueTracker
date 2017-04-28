@@ -4,18 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IssueTracker.Model;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using Dapper;
 
 namespace IssueTracker.Service
 {
     public class Account : Interface.IAccount
     {
 
+        private string _cname;
+        private string _cnstring
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.ConnectionStrings[_cname].ConnectionString;
+            }
+        }
         #region ctor
+        public Account(string cn)
+        {
+            _cname = cn;
+        }
         #endregion
 
         public string Add(Model.Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var sql = new SqlConnection(_cnstring))
+                    sql.Execute("Account_Insert", account, commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                return ex.InnerException?.Message ?? ex.Message;
+            }
+
+            return null;
         }
 
         public string Delete(string accountId)
@@ -35,12 +62,23 @@ namespace IssueTracker.Service
 
         public IEnumerable<Model.Account> GetList()
         {
-            throw new NotImplementedException();
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<Model.Account>("SELECT * FROM Account WITH (NOLOCK)", commandType: CommandType.Text);
         }
 
         public string Update(Model.Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var sql = new SqlConnection(_cnstring))
+                    sql.Execute("Account_Update", account, commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                return ex.InnerException?.Message ?? ex.Message;
+            }
+
+            return null;
         }
     }
 }

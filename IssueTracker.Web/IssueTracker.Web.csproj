@@ -216,6 +216,20 @@
     <Content Include="Views\Issue\Issues.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">
+      <Project>{477508c5-20bc-4aa8-902d-2d85ffba707f}</Project>
+      <Name>IssueTracker.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IssueTracker.Model\IssueTracker.Model.csproj">
+      <Project>{e7bad3c9-7cfd-4b16-b6dc-9ae3e5e313f7}</Project>
+      <Name>IssueTracker.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IssueTracker.Service\IssueTracker.Service.csproj">
+      <Project>{5cf2bb8a-cd9c-4bf6-a767-a8383a73bb9c}</Project>
+      <Name>IssueTracker.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

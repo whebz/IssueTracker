@@ -34,6 +34,7 @@
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,6 +52,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">
+      <Project>{477508c5-20bc-4aa8-902d-2d85ffba707f}</Project>
+      <Name>IssueTracker.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IssueTracker.Model\IssueTracker.Model.csproj">
       <Project>{e7bad3c9-7cfd-4b16-b6dc-9ae3e5e313f7}</Project>
       <Name>IssueTracker.Model</Name>

@@ -7,3 +7,4 @@ IssueTracker.Model/obj
 IssueTracker.Model/bin
 IssueTracker.Core/obj
 IssueTracker.Core/bin
+.vs/*

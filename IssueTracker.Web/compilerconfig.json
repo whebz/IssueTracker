@@ -1,0 +1,54 @@
+﻿[
+  {
+    "outputFile": "Static/css/common.css",
+    "inputFile": "Static/css/common.scss"
+  },
+  {
+    "outputFile": "Static/css/main/common.css",
+    "inputFile": "Static/css/main/common.scss"
+  },
+  {
+    "outputFile": "Static/css/calendar.css",
+    "inputFile": "Static/css/calendar.scss"
+  },
+  {
+    "outputFile": "Static/css/mail.css",
+    "inputFile": "Static/css/mail.scss"
+  },
+  {
+    "outputFile": "Static/css/sidebarFooter.css",
+    "inputFile": "Static/css/sidebarFooter.scss"
+  },
+  {
+    "outputFile": "Static/css/contacts.css",
+    "inputFile": "Static/css/contacts.scss"
+  },
+  {
+    "outputFile": "Static/css/logIn.css",
+    "inputFile": "Static/css/logIn.scss"
+  },
+  {
+    "outputFile": "Static/css/sidebar.css",
+    "inputFile": "Static/css/sidebar.scss"
+  },
+  {
+    "outputFile": "Static/css/metroThemeCustomization.css",
+    "inputFile": "Static/css/metroThemeCustomization.scss"
+  },
+  {
+    "outputFile": "Static/css/tasks.css",
+    "inputFile": "Static/css/tasks.scss"
+  },
+  {
+    "outputFile": "Static/css/mailNew.css",
+    "inputFile": "Static/css/mailNew.scss"
+  },
+  {
+    "outputFile": "Static/css/new.css",
+    "inputFile": "Static/css/new.scss"
+  },
+  {
+    "outputFile": "Static/css/about.css",
+    "inputFile": "Static/css/about.scss"
+  }
+]

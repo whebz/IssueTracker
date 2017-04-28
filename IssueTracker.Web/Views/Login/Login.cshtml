@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SignIn</title>
+    <link type="image/x-icon" href="~/favicon-progress.ico" rel="shortcut icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.metro.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.dataviz.metro.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link type="text/css" href="~/Static/css/logIn.css" rel="stylesheet" />
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/jquery.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.aspnetmvc.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.timezones.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+            <a href="@Url.Action("Index", "Home")" title="Go to WebMail">
+                <h1>Issue Tracking System</h1>
+                <p>Database Project</p>
+            </a>
+        </div>
+        <div class="footer">
+            <p>
+                Copyright &copy; @DateTime.Now.Year
+                <br />
+                webster velasco.
+            </p>
+            <p>
+                All Rights Reserved.
+            </p>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Sign In</h2>
+        <label for="username">Username</label>
+        <input type="text" class="k-input username-textbox" name="username" value="">
+        <label for="password">Password</label>
+        <input type="password" class="k-input password-textbox" name="password" value="">
+        <br />
+        <button id="signInButton" class="k-primary" onclick="location.href='@Url.Action("Index", "Home")';return false;">Sign In</button>S
+    </div>
+    @(Html.Kendo().Window()
+        .Name("aboutWindow")
+        .Title("")
+        .Content("loading...")
+        .Iframe(false)
+        .Modal(true)
+        .LoadContentFrom("About", "Home")
+        .Actions(actions => actions.Close())
+        .Draggable(true)
+        .Visible(false)
+    )
+</body>
+</html>

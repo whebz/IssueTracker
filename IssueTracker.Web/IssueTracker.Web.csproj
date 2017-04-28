@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,7 +157,7 @@
     <Content Include="Static\css\common.min.css">
       <DependentUpon>common.css</DependentUpon>
     </Content>
-    <Content Include="Static\css\contacts.css" />
+    <Content Include="Static\css\account.css" />
     <Content Include="Static\css\mail.css" />
     <Content Include="Static\css\metroThemeCustomization.css" />
     <Content Include="Static\css\new.css" />
@@ -198,7 +199,7 @@
     <Content Include="Static\css\about.scss" />
     <Content Include="Static\css\calendar.scss" />
     <Content Include="Static\css\common.scss" />
-    <Content Include="Static\css\contacts.scss" />
+    <Content Include="Static\css\account.scss" />
     <Content Include="Static\css\mail.scss" />
     <Content Include="Static\css\metroThemeCustomization.scss" />
     <Content Include="Static\css\new.scss" />
@@ -213,6 +214,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Views\Issue\Issues.cshtml" />
+    <Content Include="Views\Account\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

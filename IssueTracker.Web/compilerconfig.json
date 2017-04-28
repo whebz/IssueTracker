@@ -20,8 +20,8 @@
     "inputFile": "Static/css/sidebarFooter.scss"
   },
   {
-    "outputFile": "Static/css/contacts.css",
-    "inputFile": "Static/css/contacts.scss"
+    "outputFile": "Static/css/account.css",
+    "inputFile": "Static/css/account.scss"
   },
   {
     "outputFile": "Static/css/logIn.css",

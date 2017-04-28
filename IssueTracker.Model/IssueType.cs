@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IssueTracker.Model
 {
-    public class Class1
+    public class IssueType : Base.IDSModel
     {
     }
 }

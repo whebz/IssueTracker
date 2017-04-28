@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IssueTracker.Service
+namespace IssueTracker.Model
 {
-    public class Class1
+    public class AccountType : Base.IDSModel
     {
     }
 }

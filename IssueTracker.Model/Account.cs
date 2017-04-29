@@ -10,12 +10,12 @@ namespace IssueTracker.Model
     {
         public string AccountId { get; set; }
 
-        public string Password { get; set; }
+        protected string Password { get; set; }
 
         public string Email { get; set; }
 
         public string FullName { get; set; }
-
+        
         public string Address { get; set; }
 
         public string PostalCode { get; set; }
@@ -33,8 +33,10 @@ namespace IssueTracker.Model
         /// <summary>
         /// FK (AccountType Entity).
         /// </summary>
-        public string AccountType { get; set; }
+        public string AccountTypeId { get; set; }
 
         public bool Suspended { get; set; }
+
+        public int CompanyId { get; set; }
     }
 }

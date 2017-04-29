@@ -60,10 +60,10 @@ namespace IssueTracker.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Model.Account> GetList()
+        public IEnumerable<Model.ViewModel.AccountViewModel> GetList()
         {
             using (var sql = new SqlConnection(_cnstring))
-                return sql.Query<Model.Account>("SELECT * FROM Account WITH (NOLOCK)", commandType: CommandType.Text);
+                return sql.Query<Model.ViewModel.AccountViewModel>("AccountWithFKDescription", commandType: CommandType.StoredProcedure);
         }
 
         public string Update(Model.Account account)

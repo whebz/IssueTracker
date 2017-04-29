@@ -14,7 +14,7 @@ namespace IssueTracker.Service.Interface
 
         string Delete(string accountId);
 
-        IEnumerable<Model.Account> GetList();
+        IEnumerable<Model.ViewModel.AccountViewModel> GetList();
 
         Model.Account GetById(string accountId);
 

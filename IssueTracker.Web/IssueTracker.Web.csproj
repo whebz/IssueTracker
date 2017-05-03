@@ -136,10 +136,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\BaseViewPage.cs" />
+    <Compile Include="Security\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Security\CustomPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\IssueTracker.mdf" />
@@ -166,7 +171,7 @@
     <Content Include="Static\css\Site_save.css" />
     <Content Include="Static\css\tasks.css" />
     <Content Include="Static\js\calendar.js" />
-    <Content Include="Static\js\contacts.js" />
+    <Content Include="Static\js\account.js" />
     <Content Include="Static\js\layout.js" />
     <Content Include="Static\js\mails.js" />
     <Content Include="Static\js\new-mail.js" />
@@ -175,6 +180,32 @@
     <Content Include="Static\js\sidebar.js" />
     <Content Include="Static\js\sign-in.js" />
     <Content Include="Static\js\tasks.js" />
+    <Content Include="Static\plugin\kendo\js\jquery.min.js" />
+    <Content Include="Static\plugin\kendo\js\jszip.min.js" />
+    <Content Include="Static\plugin\kendo\js\kendo.all.min.js" />
+    <Content Include="Static\plugin\kendo\js\kendo.aspnetmvc.min.js" />
+    <Content Include="Static\plugin\kendo\js\kendo.timezones.min.js" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="Static\plugin\kendo\styles\kendo.common.min.css" />
+    <Content Include="Static\plugin\kendo\styles\kendo.dataviz.metro.min.css" />
+    <Content Include="Static\plugin\kendo\styles\kendo.metro.min.css" />
+    <Content Include="Static\plugin\kendo\styles\kendo.mobile.all.min.css" />
+    <Content Include="Static\plugin\kendo\styles\Metro\editor.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\imagebrowser.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\indeterminate.gif" />
+    <Content Include="Static\plugin\kendo\styles\Metro\loading-image.gif" />
+    <Content Include="Static\plugin\kendo\styles\Metro\loading.gif" />
+    <Content Include="Static\plugin\kendo\styles\Metro\loading_2x.gif" />
+    <Content Include="Static\plugin\kendo\styles\Metro\markers.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\markers_2x.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\slider-h.gif" />
+    <Content Include="Static\plugin\kendo\styles\Metro\slider-v.gif" />
+    <Content Include="Static\plugin\kendo\styles\Metro\sprite.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\sprite_2x.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\sprite_kpi.png" />
+    <Content Include="Static\plugin\kendo\styles\Metro\sprite_kpi_2x.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -189,8 +220,7 @@
     <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Static\plugin\" />
+    <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -215,6 +245,35 @@
     </None>
     <Content Include="Views\Issue\Issues.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
+    <Content Include="Views\Shared\Sidebar.cshtml" />
+    <Content Include="Static\plugin\kendo\js\jquery.min.map" />
+    <Content Include="Static\plugin\kendo\js\kendo.all.min.js.map" />
+    <Content Include="Static\plugin\kendo\js\kendo.aspnetmvc.min.js.map" />
+    <Content Include="Static\plugin\kendo\js\kendo.timezones.min.js.map" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\WebComponentsIcons.eot" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\WebComponentsIcons.ttf" />
+    <Content Include="Static\plugin\kendo\styles\fonts\glyphs\WebComponentsIcons.woff" />
+    <Content Include="Static\plugin\kendo\styles\kendo.common.min.css.map" />
+    <Content Include="Static\plugin\kendo\styles\kendo.dataviz.metro.min.css.map" />
+    <Content Include="Static\plugin\kendo\styles\kendo.metro.min.css.map" />
+    <Content Include="Static\plugin\kendo\styles\kendo.mobile.all.min.css.map" />
+    <Content Include="Views\Account\Editor\AccountEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">

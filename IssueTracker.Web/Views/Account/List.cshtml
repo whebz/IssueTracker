@@ -3,17 +3,16 @@
     ViewBag.Title = "List";
 }
 @section PageStyles {
-    <link type="text/css" href="@Url.Content("~/Content/account.css")" rel="stylesheet" />
+    <link href="~/Static/css/account.css" rel="stylesheet" />
 }
-@Scripts.Render("~/Scripts/contacts.js")
-<script type="text/x-kendo-tmpl" id="single-contact-template">
+<script type="text/x-kendo-tmpl" id="account-template">
     <div class="contact-view k-widget" uid="#: uid #">
         <div class="header">
-            <span class="hidden-email" style="display:none">#: Email #</span>
             <span class="image-wrapper">
-                <img src="# if (sessionStorage.getItem(EmployeeID)) {#data:image/png;base64,#:sessionStorage.getItem(EmployeeID)# # } else {#@(Url.Content("Contacts/Picture/"))#:EmployeeID# # } #" alt="#:EmployeeID # image" />
+                <img src="#if (Photo) {# @Url.Content("~/files/profile/") #:Photo # #} else {# @Url.Content("~/files/profile/default-contact.png") #} #" alt="#: Name #"/>
+                <img src="" alt="default" />
             </span>
-            <span class="name">#: FullName #</span>
+            <span class="name">#: Name #</span>
             <div class="edit-buttons">
                 <span class="k-button k-single-edit-button"><span class="icon i-edit"></span></span>
                 <span class="k-button k-single-delete-button"><span class="icon i-delete"></span></span>
@@ -27,11 +26,15 @@
             <div class="column">
                 <p>
                     <span class="label">Company</span>
-                    <span>#if (Company) {# #: Company # #}# &nbsp;</span>
+                    <span>#if (ClientName) {# #: ClientName # #}# &nbsp;</span>
                 </p>
                 <p>
                     <span class="label">Phone</span>
                     <span>#if (Phone) {# #: Phone # #}# &nbsp;</span>
+                </p>
+                <p>
+                    <span class="label">Email</span>
+                    <span>#if (Email) {# #: Email # #}# &nbsp;</span>
                 </p>
             </div>
         </div>
@@ -43,12 +46,12 @@
         <div class="left">
             <span class="btn btn-export-pdf" onclick="exportPeople()">Export to PDF</span>
         </div>
-        <div class="right">
+        <div class="right" style="display:none">
             <span class="btn btn-vertical-pane iconOnly" onclick="changeToListDetails(this)" title="Display vertical panes"></span>
             <span class="btn btn-cards iconOnly selected" onclick="changeToContactsCards(this)" title="Display cards"></span>
         </div>
     </div>
-    <div class="inner-section list-view">
+    <div class="inner-section card-view">
         <div class="list-view-inner">
             <span class="searchbox">
                 <input type="text" class="k-input search-textbox" placeholder="Search people ...">
@@ -56,10 +59,13 @@
             @(Html.Kendo().ListView<IssueTracker.Model.Account>()
                 .Name("mainWidget")
                 .TagName("div")
-                .ClientTemplateId("single-contact-template")
+                .ClientTemplateId("account-template")
                 .DataSource(dataSource => dataSource
                     .Model(model => model.Id("AccountId"))
                     .Read(read => read.Action("Accounts_Read", "Account"))
+                    .Create(create => create.Action("Account_Create", "Account"))
+                    .Update(update => update.Action("Account_Update", "Account"))
+                    .Destroy(destroy => destroy.Action("Account_Destroy", "Account"))
                 )
                 .Editable()
                 .Selectable()
@@ -78,3 +84,4 @@
     </div>
 </section>
 
+<script src="~/Static/js/account.js"></script>

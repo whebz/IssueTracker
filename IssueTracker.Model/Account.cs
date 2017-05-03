@@ -14,17 +14,11 @@ namespace IssueTracker.Model
 
         public string Email { get; set; }
 
-        public string FullName { get; set; }
-        
-        public string Address { get; set; }
-
-        public string PostalCode { get; set; }
+        public string Name { get; set; }
 
         public string City { get; set; }
 
         public string Country { get; set; }
-
-        public string Province { get; set; }
 
         public string Phone { get; set; }
 
@@ -37,6 +31,8 @@ namespace IssueTracker.Model
 
         public bool Suspended { get; set; }
 
-        public int CompanyId { get; set; }
+        public int ClientId { get; set; }
+
+        public string Photo { get; set; }
     }
 }

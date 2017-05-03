@@ -1,42 +1,75 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title - My Kendo UI MVC Application</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Static/plugin/kendo/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Static/plugin/kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="~/Static/plugin/kendo/styles/kendo.metro.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="~/Static/css/common.css" rel="stylesheet" />
+    <link href="~/Static/css/sidebar.css" rel="stylesheet" />
+    <link href="~/Static/css/metroThemeCustomization.css" rel="stylesheet" />
+    @RenderSection("PageStyles", false)
+    @RenderSection("PageStylesPartial", false)
+    <script src="~/Static/plugin/kendo/js/jquery.min.js"></script>
+    <script src="~/Static/plugin/kendo/js/kendo.all.min.js"></script>
+    <script src="~/Static/plugin/kendo/js/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Static/plugin/kendo/js/kendo.timezones.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
+    <script src="~/Static/plugin/kendo/js/pako_deflate.min.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+    <div id="BaseUrl" data-baseurl="@Context.Request.Url.GetLeftPart(UriPartial.Authority)@Url.Content("~/")"></div>
+        <script src="~/Static/js/layout.js"></script>
+    <script id="button-template" type="text/x-kendo-template">
+    </script>
+    <script id="tooltip-template" type="text/x-kendo-template">
+        <div class="image-wrapper">
+            <img src="~/files/profile/default-contact.png" style="border-radius: 100%" />
         </div>
-    </div>
-    <div class="container body-content">
+        <p class="name">Antonio Morandi</p>
+        <p>antonio.morandi@progress.com</p>
+        @(Html.Kendo().Button()
+            .Name("signInButton")
+            .HtmlAttributes(new { @class = "k-primary" })
+            .Content("Sign Out")
+            .Events(ev => ev.Click("onClick"))
+            .ToClientTemplate()
+        )
+    </script>
+    <script type="text/kendo-ui" id="menu-item-template">
+        <span>
+            <img src='~/files/profile/default-contact.png' />
+        </span>
+    </script>
+    <header class="main-header">
+        <a href="@Url.Action("Index", "Home")" title="Go to WebMail">
+            <h1 class="logo">
+                WebMail
+            </h1>
+        </a>
+        @(Html.Kendo().Menu()
+                .Name("mainMenu")
+                .Items(items =>
+                {
+                    items.Add().Text("Mail").Action("Index", "Home");
+                    items.Add().Text("Calendar").Action("Index", "Calendar");
+                    items.Add().Text("Account").Action("List", "Account");
+                    items.Add().Text("Tasks").Action("Index", "Tasks");
+                    items.Add().Text("<span class='image-wrapper'><img src='http://demos.telerik.com/kendo-ui/content/web/Customers/PICCO.jpg'/><span/>").Encoded(false);
+                })
+        )
+        @(Html.Kendo().Tooltip()
+                .For("#mainMenu > li:last")
+                .ShowOn(TooltipShowOnEvent.Click)
+                .AutoHide(false)
+                .ContentTemplateId("tooltip-template")
+        )
+    </header>
+    <content class="main-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    </content>
 </body>
 </html>

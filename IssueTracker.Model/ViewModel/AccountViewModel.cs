@@ -8,7 +8,7 @@ namespace IssueTracker.Model.ViewModel
 {
     public class AccountViewModel: Account
     {
-        public string Company { get; set; }
+        public string ClientName { get; set; }
         public string AccountType { get; set; }
     }
 }

@@ -34,5 +34,24 @@ namespace IssueTracker.Service
             using (var sql = new SqlConnection(_cnstring))
                 return sql.Query<Model.Client>("SELECT * FROM Client", commandType: CommandType.Text);
         }
+
+        public Model.Client GetById(int clientId)
+        {
+            return null;
+        }
+
+        public string Add(Model.Client data)
+        {
+            return null;
+        }
+        public string Update(Model.Client data)
+        {
+            return null;
+        }
+
+        public string Delete(int clientId)
+        {
+            return null;
+        }
     }
 }

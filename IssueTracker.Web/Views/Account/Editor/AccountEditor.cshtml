@@ -5,7 +5,18 @@
     <div class="forms-panel">
         <input type="hidden" name="AccountId" id="AccountId" value="@Model.AccountId" />
         @Html.Label("AccountTypeId", "Account type", new { @class = "form-label" })
-        @(Html.Kendo().DropDownListFor(Model => Model.AccountTypeId))
+        @(Html.Kendo().DropDownListFor(Model => Model.AccountTypeId)
+            .Name("AccountTypeId")
+            .DataTextField("Id")
+          .DataValueField("Name")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetClient", "Account");
+              });
+          })
+          .AutoBind(true))
 
         @Html.Label("Name", "Name", new { @class = "form-label" })
         @(Html.TextBoxFor(Model => Model.Name, new { @class = "k-textbox" }))

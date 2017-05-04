@@ -71,15 +71,12 @@
                 .Selectable()
                 .Events(e => e
                     .DataBound("onListViewDataBound")
-                    .Change("onListViewSelectionChange")
                     .Edit("onListViewEdit")
                     .Cancel("onListViewChangeCancel")
                     .Save("onListViewChangeSave")
                 )
                 .HtmlAttributes(new { @class = "contacts-list" })
             )
-        </div>
-        <div class="single-contact-details k-widget">
         </div>
     </div>
 </section>

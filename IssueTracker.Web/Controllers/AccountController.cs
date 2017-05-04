@@ -13,12 +13,15 @@ namespace IssueTracker.Web.Controllers
     public class AccountController : Controller
     {
         private Service.Interface.IAccount accountService;
+        private Service.Interface.IClient clientService;
 
         #region ctor
 
         public AccountController()
         {
-            accountService = new Service.Account(cf.AppSettings["active-cn"]);
+            var cn = cf.AppSettings["active-cn"];
+            accountService = new Service.Account(cn);
+            clientService = new Service.Client(cn);
         }
 
         #endregion
@@ -131,5 +134,9 @@ namespace IssueTracker.Web.Controllers
             return Content("");
         }
 
+        public ActionResult GetClient()
+        {
+            return Json(clientService.GetList(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

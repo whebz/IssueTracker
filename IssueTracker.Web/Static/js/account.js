@@ -46,30 +46,6 @@ function exportPeople() {
         });
 }
 
-// Switch layout between List/Cards view
-function changeToListDetails(e) {
-    var contactsElement = $('.inner-section');
-    contactsElement.removeClass("card-view");
-    contactsElement.addClass("list-view");
-
-    updateSelectedViewButton(e);
-}
-
-function changeToContactsCards(e) {
-    var contactsElement = $('.inner-section');
-    contactsElement.removeClass("list-view");
-    contactsElement.addClass("card-view");
-
-    updateSelectedViewButton(e);
-}
-
-function updateSelectedViewButton(element) {
-    var selectedClass = "selected";
-
-    $(".toolbar ." + selectedClass).removeClass(selectedClass);
-    $(element).addClass(selectedClass);
-}
-
 // Get the number of contacts in each category and the total number of contacts (All)
 function getInitialNumberOfItems(listViewData) {
     var numbers = { Favorites: 0, Friends: 0, Work: 0 };
@@ -86,21 +62,6 @@ function getInitialNumberOfItems(listViewData) {
 // ListView event handlers
 function onListViewDataBound(e) {
     var listView = e.sender;
-    attachButtonHandlers();
-}
-
-function onListViewSelectionChange(e) {
-    var selecteditem = e.sender.select();
-    var dataItem = e.sender.dataItem(selecteditem);
-
-    if (!dataItem) {
-        return;
-    }
-
-    var template = kendo.template($('#single-contact-template').html());
-    var result = template(dataItem);
-    $(".single-contact-details").html(result);
-
     attachButtonHandlers();
 }
 

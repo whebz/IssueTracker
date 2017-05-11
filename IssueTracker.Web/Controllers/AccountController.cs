@@ -25,11 +25,23 @@ namespace IssueTracker.Web.Controllers
         }
 
         #endregion
-
+        private void PopulateClient()
+        {
+            var cli = clientService.GetList();
+            ViewData["Clients"] = cli;
+            ViewData["defaultClient"] = cli.First();
+        }
         // GET: Account/List
         public ActionResult List()
         {
+            PopulateClient();
             return View();
+        }
+
+        // GET: Account/Edit
+        public ActionResult Edit(string k)
+        {
+            return View("Editor/AccountEditor", accountService.GetById(k));
         }
 
         public ActionResult Accounts_Read([DataSourceRequest] DataSourceRequest request)
@@ -87,12 +99,11 @@ namespace IssueTracker.Web.Controllers
 
             return Json(ModelState.ToDataSourceResult());
         }
-
-        public ActionResult UploadPhoto(IEnumerable<HttpPostedFileBase> files)
+        [HttpPost]
+        public ActionResult UploadPhoto(IEnumerable<HttpPostedFileBase> files, string msgid)
         {
             // The Name of the Upload component is "files"
-            if (files != null)
-            {
+
                 foreach (var file in files)
                 {
                     // Some browsers send file names with full path.
@@ -101,9 +112,10 @@ namespace IssueTracker.Web.Controllers
                     var physicalPath = Path.Combine(Server.MapPath("~/files/profile"), fileName);
 
                     // The files are not actually saved in this demo
-                    // file.SaveAs(physicalPath);
+                     file.SaveAs(physicalPath);
                 }
-            }
+     
+
 
             // Return an empty string to signify success
             return Content("");
@@ -136,7 +148,14 @@ namespace IssueTracker.Web.Controllers
 
         public ActionResult GetClient()
         {
-            return Json(clientService.GetList(), JsonRequestBehavior.AllowGet);
+            var data = clientService.GetList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAccountType()
+        {
+            var data = accountService.GetAccountTypeList();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

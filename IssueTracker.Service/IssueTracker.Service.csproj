@@ -46,8 +46,11 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Connection.cs" />
     <Compile Include="Interface\IAccount.cs" />
     <Compile Include="Interface\IClient.cs" />
+    <Compile Include="Interface\IProject.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

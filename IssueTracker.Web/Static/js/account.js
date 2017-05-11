@@ -131,9 +131,8 @@ function singleCreateNewMail(e) {
 
 function singleEditClick(e) {
     var uid = getItemUid(e);
-    var listView = $("#mainWidget").data("kendoListView");
-    listView.edit(listView.element.find('[data-uid="' + uid + '"]'));
-    $(".form-title .action").html("Edit");
+    var id = getModelId(uid, $("#mainWidget").data("kendoListView"));
+    location.href = '/Account/Edit?k=' + id;
 }
 
 function singleDeleteClick(e) {
@@ -144,36 +143,13 @@ function singleDeleteClick(e) {
     }
 }
 
+function getModelId(uid, lv) {
+    return lv.dataSource.getByUid(uid).AccountId;
+}
+
 function getItemUid(e) {
     var target = $(e.target);
     var singleItem = target.parents('.contact-view');
 
     return singleItem.attr('uid');
-}
-
-// Create preview of the newly selected image
-function onImageSelect(e) {
-    var fileInfo = e.files[0];
-
-    if (fileInfo.validationErrors && fileInfo.validationErrors.length > 0) {
-        return;
-    }
-
-    setTimeout(function () {
-        addPreview(fileInfo);
-    });
-}
-
-function addPreview(file) {
-    var raw = file.rawFile;
-    var reader = new FileReader();
-
-    if (raw) {
-        reader.onloadend = function () {
-            var image = $('<img class="image-preview">').attr('src', this.result);
-            $('.upload-image-wrapper').html(image);
-        };
-
-        reader.readAsDataURL(raw);
-    }
 }

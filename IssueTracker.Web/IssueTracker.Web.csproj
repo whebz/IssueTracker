@@ -166,6 +166,9 @@
     <Content Include="Static\css\mail.css" />
     <Content Include="Static\css\metroThemeCustomization.css" />
     <Content Include="Static\css\new.css" />
+    <Content Include="Static\css\new.min.css">
+      <DependentUpon>new.css</DependentUpon>
+    </Content>
     <Content Include="Static\css\sidebar.css" />
     <Content Include="Static\css\logIn.css" />
     <Content Include="Static\css\Site_save.css" />

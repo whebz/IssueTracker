@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IssueTracker.Model
 {
-    public class Client
+    public class Client : Base.INSModel
     {
         public int MaxUser { get; set; }
     }

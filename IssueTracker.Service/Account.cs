@@ -15,18 +15,12 @@ namespace IssueTracker.Service
     public class Account : Interface.IAccount
     {
 
-        private string _cname;
-        private string _cnstring
-        {
-            get
-            {
-                return System.Configuration.ConfigurationManager.ConnectionStrings[_cname].ConnectionString;
-            }
-        }
+        private string _cnstring;
+
         #region ctor
         public Account(string cn)
         {
-            _cname = cn;
+            _cnstring = Connection.Get(cn);
         }
         #endregion
 
@@ -52,7 +46,12 @@ namespace IssueTracker.Service
 
         public Model.Account GetById(string accountId)
         {
-            throw new NotImplementedException();
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<Model.ViewModel.AccountViewModel>(
+                    "AccountWithFKDescriptionById", 
+                    new { @AccountId = accountId },
+                    commandType: CommandType.StoredProcedure)
+                        .FirstOrDefault();
         }
 
         public Model.Account GetByIdAndPassword(string accountId, string password)
@@ -79,6 +78,12 @@ namespace IssueTracker.Service
             }
 
             return null;
+        }
+
+        public IEnumerable<AccountType> GetAccountTypeList()
+        {
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<Model.AccountType>("SELECT * FROM AccountType WIH (NOLOCK)", commandType: CommandType.Text);
         }
     }
 }

@@ -19,5 +19,6 @@ namespace IssueTracker.Service.Interface
         Model.Account GetById(string accountId);
 
         Model.Account GetByIdAndPassword(string accountId, string password);
+        IEnumerable<Model.AccountType> GetAccountTypeList();
     }
 }

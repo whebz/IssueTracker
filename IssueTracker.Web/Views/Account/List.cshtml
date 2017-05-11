@@ -56,6 +56,7 @@
             <span class="searchbox">
                 <input type="text" class="k-input search-textbox" placeholder="Search people ...">
             </span>
+            @*
             @(Html.Kendo().ListView<IssueTracker.Model.Account>()
                 .Name("mainWidget")
                 .TagName("div")
@@ -76,7 +77,42 @@
                     .Save("onListViewChangeSave")
                 )
                 .HtmlAttributes(new { @class = "contacts-list" })
+            )*@
+
+            @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.AccountViewModel>()
+                .Name("grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.AccountId);
+                    columns.Bound(p => p.Name).Width(180);
+                    columns.Bound(p => p.AccountTypeId).ClientTemplate("#=AccountType#").Width(180);
+                    columns.Bound(p => p.ClientId).ClientTemplate("#=ClientName#").Width(180);
+                    columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+                })
+                .ToolBar(toolBar =>
+                {
+                    toolBar.Create();
+                })
+                .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                .Pageable()
+                .Sortable()
+                .Scrollable()
+                .HtmlAttributes(new { style = "height:550px;" })
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Model(model =>
+                    {
+                        model.Id(p => p.AccountId);
+                        model.Field(p => p.ClientId).DefaultValue(ViewData["defaultClient"] as IssueTracker.Model.Client);
+                    })
+                    .PageSize(20)
+                    .Read(read => read.Action("Accounts_Read", "Account"))
+                    .Create(create => create.Action("Account_Create", "Account"))
+                    .Update(update => update.Action("Account_Update", "Account"))
+                    .Destroy(destroy => destroy.Action("Account_Destroy", "Account"))
+                )
             )
+
         </div>
     </div>
 </section>

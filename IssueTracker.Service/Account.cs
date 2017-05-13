@@ -54,9 +54,13 @@ namespace IssueTracker.Service
                         .FirstOrDefault();
         }
 
-        public Model.Account GetByIdAndPassword(string accountId, string password)
+        public Model.ViewModel.AccountViewModel Authentication(string accountId, string password)
         {
-            throw new NotImplementedException();
+                var param = new DynamicParameters();
+                param.Add("@AccountId", dbType: DbType.String, value: accountId, direction: ParameterDirection.Input);
+                param.Add("@Password", dbType: DbType.String, value: password, direction: ParameterDirection.Input);
+                using (IDbConnection db = new SqlConnection(_cnstring))
+                    return db.Query<Model.ViewModel.AccountViewModel>("Account_Authenticate", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
         }
 
         public IEnumerable<Model.ViewModel.AccountViewModel> GetList()

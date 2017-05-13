@@ -194,6 +194,7 @@
     <Content Include="Static\js\sidebar.js" />
     <Content Include="Static\js\sign-in.js" />
     <Content Include="Static\js\tasks.js" />
+    <Content Include="Static\plugin\bootstrap\bootstrap.min.js" />
     <Content Include="Static\plugin\kendo\js\jquery.min.js" />
     <Content Include="Static\plugin\kendo\js\jszip.min.js" />
     <Content Include="Static\plugin\kendo\js\kendo.all.min.js" />
@@ -220,6 +221,7 @@
     <Content Include="Static\plugin\kendo\styles\Metro\sprite_2x.png" />
     <Content Include="Static\plugin\kendo\styles\Metro\sprite_kpi.png" />
     <Content Include="Static\plugin\kendo\styles\Metro\sprite_kpi_2x.png" />
+    <Content Include="Static\plugin\tether\tether.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -423,6 +425,9 @@
     <Content Include="Static\coreUI-theme\scss\_bootstrap-variables.scss" />
     <Content Include="Static\coreUI-theme\scss\_custom-variables.scss" />
     <Content Include="Static\coreUI-theme\scss\_custom.scss" />
+    <Content Include="Views\Shared\_coreUILayout.cshtml" />
+    <Content Include="Static\plugin\pace\pace.min.js" />
+    <Content Include="Static\plugin\pace\pace.theme.minimal.css" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">

@@ -19,6 +19,9 @@ namespace IssueTracker.Service.Interface
         Model.Account GetById(string accountId);
 
         Model.ViewModel.AccountViewModel Authentication(string accountId, string password);
+
         IEnumerable<Model.AccountType> GetAccountTypeList();
+
+        IEnumerable<Model.ViewModel.AccountByType> GetAccountSummary();
     }
 }

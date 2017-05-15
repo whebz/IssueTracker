@@ -1,64 +1,69 @@
-﻿@{
+﻿
+
+@{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>SignIn</title>
-    <link type="image/x-icon" href="~/favicon-progress.ico" rel="shortcut icon">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" rel="stylesheet" />
-    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.dataviz.min.css" rel="stylesheet" />
-    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.metro.min.css" rel="stylesheet" />
-    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.dataviz.metro.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link type="text/css" href="~/Static/css/logIn.css" rel="stylesheet" />
-    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/jquery.min.js"></script>
-    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
-    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.aspnetmvc.min.js"></script>
-    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.timezones.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
+    <meta name="author" content="Lukasz Holeczek">
+    <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
+    <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+    <title>Login</title>
+
+    <!-- Icons -->
+    <link href="~/Static/coreUI-theme/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Static/coreUI-theme/css/simple-line-icons.css" rel="stylesheet" />
+
+    <!-- Main styles for this application -->
+    <link href="~/Static/coreUI-theme/css/style.css" rel="stylesheet" />
+
+    <link href="~/Static/plugin/pace/pace.theme.minimal.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="sidebar">
-        <div class="header">
-            <a href="@Url.Action("Index", "Home")" title="Go to WebMail">
-                <h1>Issue Tracking System</h1>
-                <p>Database Project</p>
-            </a>
-        </div>
-        <div class="footer">
-            <p>
-                Copyright &copy; @DateTime.Now.Year
-                <br />
-                webster velasco.
-            </p>
-            <p>
-                All Rights Reserved.
-            </p>
+<body class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card-group mb-0">
+                    <div class="card p-4">
+                        <div class="card-block">
+                            
+                            <form class="form-horizontal form-material" method="post" action="Login/Login">
+                                <h1>Login</h1>
+                                <p class="text-muted">Sign In to your account</p>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-addon">
+                                        <i class="icon-user"></i>
+                                    </span>
+                                    <input type="text" id="UserId" name="UserId" class="form-control" placeholder="Username">
+                                </div>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-addon">
+                                        <i class="icon-lock"></i>
+                                    </span>
+                                    <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-4">Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="content">
-        <h2>Sign In</h2>
-        <label for="username">Username</label>
-        <input type="text" class="k-input username-textbox" name="username" value="">
-        <label for="password">Password</label>
-        <input type="password" class="k-input password-textbox" name="password" value="">
-        <br />
-        <button id="signInButton" class="k-primary" onclick="location.href='@Url.Action("Index", "Home")';return false;">Sign In</button>S
-    </div>
-    @(Html.Kendo().Window()
-        .Name("aboutWindow")
-        .Title("")
-        .Content("loading...")
-        .Iframe(false)
-        .Modal(true)
-        .LoadContentFrom("About", "Home")
-        .Actions(actions => actions.Close())
-        .Draggable(true)
-        .Visible(false)
-    )
+    <!-- Bootstrap and necessary plugins -->
+    <script src="~/Static/plugin/kendo/js/jquery.min.js"></script>
+    <script src="~/Static/plugin/tether/tether.min.js"></script>
+    <script src="~/Static/plugin/bootstrap/bootstrap.min.js"></script>
+
 </body>
 </html>

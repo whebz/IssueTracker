@@ -89,5 +89,11 @@ namespace IssueTracker.Service
             using (var sql = new SqlConnection(_cnstring))
                 return sql.Query<Model.AccountType>("SELECT * FROM AccountType WIH (NOLOCK)", commandType: CommandType.Text);
         }
+
+        public IEnumerable<Model.ViewModel.AccountByType> GetAccountSummary()
+        {
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<Model.ViewModel.AccountByType>("SELECT [AccountType], [Name], [Count] FROM AccountCountByType WIH (NOLOCK)", commandType: CommandType.Text);
+        }
     }
 }

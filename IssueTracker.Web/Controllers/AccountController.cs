@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Web.Security;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using cf = System.Configuration.ConfigurationManager;
@@ -156,6 +157,19 @@ namespace IssueTracker.Web.Controllers
         {
             var data = accountService.GetAccountTypeList();
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAccountSummary()
+        {
+            var data = accountService.GetAccountSummary();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Signout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account", null);
         }
     }
 }

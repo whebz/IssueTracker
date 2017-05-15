@@ -5,7 +5,7 @@ using System.Web;
 using System.Security.Principal;
 namespace IssueTracker.Web.Security
 {
-    public class CustomPrincipal : Model.Account, IPrincipal
+    public class CustomPrincipal : Model.ViewModel.AccountViewModel, IPrincipal
     {
         public IIdentity Identity { get; private set; }
         public bool IsInRole(string role)
@@ -25,7 +25,7 @@ namespace IssueTracker.Web.Security
         }
     }
 
-    public class CustomPrincipalSerializeModel : Model.Account
+    public class CustomPrincipalSerializeModel : Model.ViewModel.AccountViewModel
     {
 
     }

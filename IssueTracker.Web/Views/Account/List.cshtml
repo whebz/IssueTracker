@@ -2,26 +2,10 @@
 @{
     ViewBag.Title = "List";
 }
-
+@model IEnumerable<IssueTracker.Model.ViewModel.AccountByType>
 <div class="sidebar">
     <nav class="sidebar-nav">
-        <!-- type of accounts with counts -->
-        <script id="treeview-template" type="text/kendo-ui-template">
-            <li class="nav-item">
-                <a class="nav-link" href="#"> #: item.Text #</a>
-                </li>
-</script>
-        @(Html.Kendo().TreeView()
-        .HtmlAttributes(new { @class = "nav"})
-        .Name("filterNav")
-        .TemplateId("treeview-template")
-        .DataSource(source =>
-        {
-            source.Read(read => read.Action("GetAccountSummary", "Account"));
-        })
-        .DataTextField("Name")
-        
-        )
+        @Html.Partial("_ListSummary", Model)
     </nav>
 </div>
 
@@ -32,7 +16,7 @@
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Account list</a></li>
         <!-- add button -->
-        <li class="breadcrumb-menu">
+        <li class="breadcrumb-menu hidden">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <a class="btn btn-secondary" href="./"><i class="icon-plus"></i> &nbsp;Add new account</a>
             </div>
@@ -57,7 +41,7 @@
                     columns.Bound(p => p.Name).Width(180);
                     columns.Bound(p => p.AccountType).Width(180);
                     columns.Bound(p => p.ClientName).Width(180);
-                    columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+                    columns.Command(command => { command.Destroy().Text(" "); }).Width(50);
                 })
                 .Editable(editable => editable.Mode(GridEditMode.PopUp))
                 .Pageable()

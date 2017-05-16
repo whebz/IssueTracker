@@ -1,105 +1,116 @@
-﻿@model IssueTracker.Model.ViewModel.AccountViewModel
-@Styles.Render("~/static/css/new.css")
-<section class="main-section">
-    <div class="contact-edit-view k-widget">
-        
-        <h2 class="form-title"><span class="action">Create New</span> Contact</h2>
+﻿@model IssueTracker.Web.Models.AccountEditorVM
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        @Html.Partial("_ListSummary", (IEnumerable<IssueTracker.Model.ViewModel.AccountByType>)@ViewBag.AccountSummary)
+    </nav>
+</div>
+<!-- Main content -->
+<main class="main">
 
-        <div class="resp-div">
-            <form>
-                <div class="forms-panel">
-                    <input type="hidden" name="AccountId" id="AccountId" value="@Model.AccountId" />
-                    @Html.Label("AccountTypeId", "Account type", new { @class = "form-label" })
-                    @(Html.Kendo().DropDownList()
-                    .Name("AccountTypeId")
-                    .DataTextField("Description")
-                    .DataValueField("Id")
-                    .Value(Model.AccountTypeId)
-                    .DataSource(source =>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Account list</a></li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+@using (Html.BeginForm("Edit", "Account",  FormMethod.Post,
+                                                  new { enctype = "multipart/form-data" }))
+{
+                        <div class="card-header">
+
+                            @if (Model.ActionState == "I")
+                            { <strong>Nuovo </strong> }
+                            else
+                            { <strong>Modifica </strong> } Account
+                        </div>
+                        <div class="card-block">
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label">Account Id</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">@Model.Account.AccountId</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Text" value="@Model.Account.Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="Email">Email</label>
+                                <div class="col-md-9">
+                                    <input type="email" id="Email" name="Email" class="form-control" placeholder="Enter Email" value="@Model.Account.Email">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="select">Account Type</label>
+                                <div class="col-md-9">
+                                    @(Html.Kendo().DropDownListFor(m => m.Account.AccountTypeId)
+                        .Name("AccountTypeId")
+                        .DataTextField("Description")
+                        .DataValueField("Id")
+                        .DataSource(source =>
                         {
                             source.Read(read =>
                             {
                                 read.Action("GetAccountType", "Account");
                             });
-                        }))
-                    @Html.Label("Name", "Name", new { @class = "form-label" })
-                    @(Html.TextBoxFor(Model => Model.Name, new { @class = "k-textbox" }))
-                    @Html.Label("ClientId", "Company", new { @class = "form-label" })
-                    @(Html.Kendo().DropDownList()
-                    .Name("ClientId")
-                    .DataTextField("Name")
-                    .DataValueField("Id")
-                    .Value(Model.ClientId.ToString())
-                    .DataSource(source =>
+                        })
+                        .HtmlAttributes(new { @class = "form-control input-sm" }))
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="select">Company</label>
+                                <div class="col-md-9">
+                                    @(Html.Kendo().DropDownListFor(m => m.Account.ClientId)
+                        .Name("ClientId")
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .DataSource(source =>
                         {
                             source.Read(read =>
                             {
                                 read.Action("GetClient", "Account");
                             });
-                        }))
-                    @Html.Label("City", "City", new { @class = "form-label" })
-                    @(Html.TextBoxFor(Model => Model.City, new { @class = "k-textbox" }))
-                    @Html.Label("Country", "Country", new { @class = "form-label" })
-                    @(Html.TextBoxFor(Model => Model.Country, new { @class = "k-textbox" }))
-                    @Html.Label("Phone", "Phone", new { @class = "form-label" })
-                    @(Html.TextBoxFor(Model => Model.Phone, new { @class = "k-textbox" }))
-                    @Html.Label("Email", "Email", new { @class = "form-label" })
-                    @(Html.TextBoxFor(Model => Model.Email, new { @class = "k-textbox" }))
+                        })
+                        .HtmlAttributes(new { @class = "form-control input-sm" }))
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Phone</label>
+                                <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Country name" value="@Model.Account.Phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="country">City</label>
+                                <input type="text" class="form-control" name="City" id="City" placeholder="City name" value="@Model.Account.City">
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" id="Country" value="@Model.Account.Country">
+                            </div>
+                            <input type="hidden" name="CreatedDate" id="CreatedDate" value="@Model.Account.CreatedDate" />
+                        </div>
+                        <div class="card-footer right">
+                            <button type="submit" class="btn btn-sm btn-primary" name="state" value="@Model.ActionState"><i class="fa fa-save"></i> Submit</button>
+                            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i> Reset</button>
+                        </div>
+}
                 </div>
-                <div class="form-buttons">
-                    <button type="button" class="k-button k-primary k-update-button" href="\\#">Save</button>
-                    <button type="button" class="k-button k-cancel-button" href="\\#">Cancel</button>
-                </div>
-            </form>
-        </div>
-        <div class="resp-div">
-            <div class="upload-wrapper">
-                <span class="upload-image-wrapper">
-                    <img class="image-preview" alt="@Model.AccountId image" />
-                </span>
-                @(Html.Kendo().Upload()
-                    .Name("Photo")
-                    .Multiple(false)
- 
-                    .Validation(v => v.AllowedExtensions(new string[] { ".gif", ".jpg", ".png" }))
-                    .Messages(m => m
-                        .Select("Add Photo ...")
-                        .DropFilesHere("Drop files here to upload")
-                    )
-                    .Events(e => e.Select("onImageSelect"))
-                )
             </div>
+            <!--/col-->
         </div>
-
-        <div style="clear:both" />
-
     </div>
-</section>
+</main>
+
 <script>
-    // Create preview of the newly selected image
-    function onImageSelect(e) {
-        var fileInfo = e.files[0];
+    $(document).ready(function () {
 
-        if (fileInfo.validationErrors && fileInfo.validationErrors.length > 0) {
-            return;
-        }
-
-        setTimeout(function () {
-            addPreview(fileInfo);
-        });
-    }
-
-    function addPreview(file) {
-        var raw = file.rawFile;
-        var reader = new FileReader();
-
-        if (raw) {
-            reader.onloadend = function () {
-                var image = $('<img class="image-preview">').attr('src', this.result);
-                $('.upload-image-wrapper').html(image);
-            };
-
-            reader.readAsDataURL(raw);
-        }
-    }
+    });
 </script>

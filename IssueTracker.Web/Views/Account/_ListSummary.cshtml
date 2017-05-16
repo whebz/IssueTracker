@@ -1,0 +1,15 @@
+﻿@model IEnumerable<IssueTracker.Model.ViewModel.AccountByType>
+
+
+<ul class="nav">
+
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a class="nav-link" href="#@item.AccountType"> @item.Name (@item.Count)</a>
+    </li>
+
+}
+
+</ul>

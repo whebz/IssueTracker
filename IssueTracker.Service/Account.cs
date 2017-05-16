@@ -29,7 +29,7 @@ namespace IssueTracker.Service
             try
             {
                 using (var sql = new SqlConnection(_cnstring))
-                    sql.Execute("Account_Insert", account, commandType: CommandType.StoredProcedure);
+                    sql.Execute("AccountAdd", account, commandType: CommandType.StoredProcedure);
             }
             catch (SqlException ex)
             {
@@ -47,8 +47,8 @@ namespace IssueTracker.Service
         public Model.Account GetById(string accountId)
         {
             using (var sql = new SqlConnection(_cnstring))
-                return sql.Query<Model.ViewModel.AccountViewModel>(
-                    "AccountWithFKDescriptionById", 
+                return sql.Query<Model.Account>(
+                    "AccountById", 
                     new { @AccountId = accountId },
                     commandType: CommandType.StoredProcedure)
                         .FirstOrDefault();
@@ -74,7 +74,7 @@ namespace IssueTracker.Service
             try
             {
                 using (var sql = new SqlConnection(_cnstring))
-                    sql.Execute("Account_Update", account, commandType: CommandType.StoredProcedure);
+                    sql.Execute("AccountUpdate", account, commandType: CommandType.StoredProcedure);
             }
             catch (SqlException ex)
             {

@@ -22,7 +22,7 @@ namespace IssueTracker.Model
 
         public string Phone { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// FK (AccountType Entity).
@@ -33,6 +33,6 @@ namespace IssueTracker.Model
 
         public int ClientId { get; set; }
 
-        public string Photo { get; set; }
+        //public string Photo { get; set; }
     }
 }

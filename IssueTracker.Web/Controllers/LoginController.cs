@@ -38,7 +38,8 @@ namespace IssueTracker.Web.Controllers
                         Name = uProfile.Name,
                         Email = uProfile.Email,
                         AccountType = uProfile.AccountType,
-                        AccountTypeId = uProfile.AccountTypeId
+                        AccountTypeId = uProfile.AccountTypeId,
+                        Role = uProfile.AccountType
                     };
                     string userData = JsonConvert.SerializeObject(serializeModel);
                     FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, uProfile.Email, DateTime.Now, DateTime.Now.AddMinutes(30), false, userData);
@@ -50,7 +51,7 @@ namespace IssueTracker.Web.Controllers
                     if (!string.IsNullOrEmpty(returnUrl))
                         return Redirect(returnUrl);
                     if (uProfile.AccountTypeId == "0")
-                        return RedirectToAction("Index", "Dashboard");
+                        return RedirectToAction("List", "Account");
                     else
                         return RedirectToAction("Issues", "Issue");
                 }

@@ -23,10 +23,11 @@ namespace IssueTracker.Web.Security
         {
             this.Identity = new GenericIdentity(Username);
         }
+        public string Role { get; set; }
     }
 
     public class CustomPrincipalSerializeModel : Model.ViewModel.AccountViewModel
     {
-
+        public string Role { get; set; }
     }
 }

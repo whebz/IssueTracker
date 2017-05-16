@@ -37,16 +37,22 @@
                 .Name("grid")
                 .Columns(columns =>
                 {
+                    columns.Bound(p => p.AccountId)
+                           .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= AccountId #\");'><i class='fa fa-edit' /></a>")
+                           .Title("").Width(60);
+                    columns.Bound(p => p.AccountId)
+                           .ClientTemplate("<a class='btn btn-danger' onclick='destroyAccount(\"#= AccountId #\");'><i class='fa fa-remove' /></a>")
+                           .Title("").Width(60);
                     columns.Bound(p => p.AccountId);
                     columns.Bound(p => p.Name).Width(180);
                     columns.Bound(p => p.AccountType).Width(180);
                     columns.Bound(p => p.ClientName).Width(180);
-                    columns.Command(command => { command.Destroy().Text(" "); }).Width(50);
+                    
                 })
                 .Editable(editable => editable.Mode(GridEditMode.PopUp))
                 .Pageable()
                 .Sortable()
-                .Scrollable()
+                .Scrollable(s => s.Enabled(true))
                 .HtmlAttributes(new { style = "height:550px;" })
                 .DataSource(dataSource => dataSource
                     .Ajax()
@@ -57,9 +63,6 @@
                     })
                     .PageSize(20)
                     .Read(read => read.Action("Accounts_Read", "Account"))
-                    .Create(create => create.Action("Account_Create", "Account"))
-                    .Update(update => update.Action("Account_Update", "Account"))
-                    .Destroy(destroy => destroy.Action("Account_Destroy", "Account"))
                 )
                 )
             </div>
@@ -67,3 +70,28 @@
     </div>
     <!-- /.conainer-fluid -->
 </main>
+<script>
+    var grid;
+    $(document).ready(function () {
+        grid = $("#grid").data("kendoGrid");
+    });
+    function destroyAccount(id) {
+        var r = confirm("Sei sicuro di voler cancellare l'account?");
+        if (r) {
+            $.ajax({
+                url: '@Url.Action("Account_Destroy", "Account")',
+                data: JSON.stringify({id: id}),
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    alert(data)
+                },
+            });
+            grid.dataSource.read();
+            grid.refresh();
+        }
+    }
+    function edit(id) {
+        document.location.href = '@Url.Action("Edit", "Account")' + '?k=' + id;
+    }
+</script>

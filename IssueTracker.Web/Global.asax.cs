@@ -36,7 +36,8 @@ namespace IssueTracker.Web
                     Name = serializeModel.Name,
                     Email = serializeModel.Email,
                     AccountTypeId = serializeModel.AccountTypeId,
-                    AccountType = serializeModel.AccountType
+                    AccountType = serializeModel.AccountType,
+                    Role = serializeModel.Role
                 };
                 HttpContext.Current.User = newUser;
             }

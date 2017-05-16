@@ -11,6 +11,7 @@ using cf = System.Configuration.ConfigurationManager;
 
 namespace IssueTracker.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private Service.Interface.IAccount accountService;
@@ -75,14 +76,14 @@ namespace IssueTracker.Web.Controllers
 
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Account_Destroy([DataSourceRequest] DataSourceRequest request, Model.Account contact)
+        public ActionResult Account_Destroy(string id)
         {
-            if (contact != null)
+            if (!string.IsNullOrEmpty(id))
             {
-                accountService.Delete(contact.AccountId);
+                return Json(accountService.Delete(id), JsonRequestBehavior.AllowGet);
             }
 
-            return Json(ModelState.ToDataSourceResult());
+            return Json("ID NULL", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetClient()

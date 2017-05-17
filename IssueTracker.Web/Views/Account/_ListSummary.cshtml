@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<IssueTracker.Model.ViewModel.AccountByType>
 
-
+@{ 
+    var count = Model.Sum(c => c.Count);
+}
 <ul class="nav">
 
-
+    <li class="nav-item ">
+        <a class="nav-link active" href="#"> Tutti (@count)</a>
+    </li>
 @foreach (var item in Model)
 {
     <li class="nav-item">

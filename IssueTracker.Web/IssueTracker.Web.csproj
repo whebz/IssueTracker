@@ -201,9 +201,25 @@
     <Content Include="Static\plugin\kendo\js\kendo.all.min.js" />
     <Content Include="Static\plugin\kendo\js\kendo.aspnetmvc.min.js" />
     <Content Include="Static\plugin\kendo\js\kendo.timezones.min.js" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\editor.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\imagebrowser.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\indeterminate.gif" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\loading-image.gif" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\loading.gif" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\loading_2x.gif" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\markers.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\markers_2x.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\slider-h.gif" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\slider-v.gif" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\sprite.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\sprite_2x.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\sprite_kpi.png" />
+    <Content Include="Static\plugin\kendo\styles\Bootstrap\sprite_kpi_2x.png" />
     <Content Include="Static\plugin\kendo\styles\fonts\DejaVu\LICENSE.txt" />
     <Content Include="Static\plugin\kendo\styles\fonts\glyphs\KendoUIGlyphs.svg" />
     <Content Include="Static\plugin\kendo\styles\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="Static\plugin\kendo\styles\kendo.bootstrap-v4.min.css" />
+    <Content Include="Static\plugin\kendo\styles\kendo.common-bootstrap.min.css" />
     <Content Include="Static\plugin\kendo\styles\kendo.common.min.css" />
     <Content Include="Static\plugin\kendo\styles\kendo.dataviz.metro.min.css" />
     <Content Include="Static\plugin\kendo\styles\kendo.metro.min.css" />
@@ -430,6 +446,11 @@
     <Content Include="Static\plugin\pace\pace.min.js" />
     <Content Include="Static\plugin\pace\pace.theme.minimal.css" />
     <Content Include="Views\Account\_ListSummary.cshtml" />
+    <Content Include="Static\plugin\kendo\styles\kendo.bootstrap-v4.min.css.map" />
+    <Content Include="Static\plugin\kendo\styles\kendo.common-bootstrap.min.css.map" />
+    <Content Include="Views\Issue\List.cshtml" />
+    <Content Include="Views\Issue\_SideBarIssueList.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">

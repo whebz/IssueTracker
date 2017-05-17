@@ -41,7 +41,16 @@ namespace IssueTracker.Service
 
         public string Delete(string accountId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var sql = new SqlConnection(_cnstring))
+                    sql.Execute("AccountDelete", new { @AccountId = accountId }, commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                return ex.InnerException?.Message ?? ex.Message;
+            }
+            return null;
         }
 
         public Model.Account GetById(string accountId)

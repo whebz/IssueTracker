@@ -38,22 +38,20 @@
                 .Columns(columns =>
                 {
                     columns.Bound(p => p.AccountId)
-                           .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= AccountId #\");'><i class='fa fa-edit' /></a>")
-                           .Title("").Width(60);
-                    columns.Bound(p => p.AccountId)
-                           .ClientTemplate("<a class='btn btn-danger' onclick='destroyAccount(\"#= AccountId #\");'><i class='fa fa-remove' /></a>")
-                           .Title("").Width(60);
-                    columns.Bound(p => p.AccountId);
+                           .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= AccountId #\");'><span class='fa fa-edit' /></a><a class='btn btn-danger' onclick='destroyAccount(\"#= AccountId #\");'><span class='fa fa-remove' /></a>")
+                           .Title("").Width(100);
+                    columns.Bound(p => p.AccountId).Width(150);
                     columns.Bound(p => p.Name).Width(180);
                     columns.Bound(p => p.AccountType).Width(180);
                     columns.Bound(p => p.ClientName).Width(180);
                     
                 })
-                .Editable(editable => editable.Mode(GridEditMode.PopUp))
-                .Pageable()
+                .Scrollable()
                 .Sortable()
-                .Scrollable(s => s.Enabled(true))
-                .HtmlAttributes(new { style = "height:550px;" })
+                .Pageable(pageable => pageable
+                    .PageSizes(true)
+                    .ButtonCount(5)
+                )
                 .DataSource(dataSource => dataSource
                     .Ajax()
                     .Model(model =>
@@ -80,15 +78,18 @@
         if (r) {
             $.ajax({
                 url: '@Url.Action("Account_Destroy", "Account")',
-                data: JSON.stringify({id: id}),
+                data: {id: id},
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
                     alert(data)
                 },
+                complete: function () {
+                    grid.dataSource.read();
+                    grid.refresh();
+                }
             });
-            grid.dataSource.read();
-            grid.refresh();
+
         }
     }
     function edit(id) {

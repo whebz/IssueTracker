@@ -35,15 +35,23 @@
                                     <div class="callout callout-default">
                                         <small class="text-muted">Not Assigned</small>
                                         <br>
-                                        <strong class="h4">9,123</strong>
+                                        <strong class="h4" id="notassigned-issue">9,123</strong>
+                                    </div>
+                                </div>
+                                <!--/.col-->
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="callout card-accent-info">
+                                        <small class="text-muted">Assigned</small>
+                                        <br>
+                                        <strong class="h4" id="assigned-issue">22,643</strong>
                                     </div>
                                 </div>
                                 <!--/.col-->
                                 <div class="col-sm-6 col-md-3">
                                     <div class="callout callout-warning">
-                                        <small class="text-muted">Assigned</small>
+                                        <small class="text-muted">On Progress</small>
                                         <br>
-                                        <strong class="h4">22,643</strong>
+                                        <strong class="h4" id="onprogress-issue">22,643</strong>
                                     </div>
                                 </div>
                                 <!--/.col-->
@@ -51,7 +59,7 @@
                                     <div class="callout callout-success">
                                         <small class="text-muted">Closed</small>
                                         <br>
-                                        <strong class="h4">22,643</strong>
+                                        <strong class="h4" id="closed-issue">22,643</strong>
                                     </div>
                                 </div>
                                 <!--/.col-->
@@ -59,7 +67,7 @@
                                     <div class="callout callout-danger">
                                         <small class="text-muted">Suspended</small>
                                         <br>
-                                        <strong class="h4">22,643</strong>
+                                        <strong class="h4" id="suspended-issue">22,643</strong>
                                     </div>
                                 </div>
                                 <!--/.col-->
@@ -69,230 +77,31 @@
                         </div>
                         <!--/.row-->
                         <br>
-                        <table class="table table-hover table-outline m-b-0 hidden-sm-down">
-                            <thead class="thead-default">
-                                <tr>
-                                    <th class="text-xs-center"><i class="icon-people"></i></th>
-                                    <th>User</th>
-                                    <th class="text-xs-center">Country</th>
-                                    <th>Usage</th>
-                                    <th class="text-xs-center">Payment Method</th>
-                                    <th>Activity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-xs-center">
-                                        <div class="avatar">
-                                            <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                                            <span class="avatar-status tag-success"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Yiorgos Avraamu</div>
-                                        <div class="small text-muted">
-                                            <span>New</span> | Registered: Jan 1, 2015
-                                        </div>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <img src="assets/img/flags/USA.png" alt="USA" style="height:24px;">
-                                    </td>
-                                    <td>
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <strong>50%</strong>
-                                            </div>
-                                            <div class="pull-right">
-                                                <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                            </div>
-                                        </div>
-                                        <progress class="progress progress-xs progress-success" value="50" max="100" style="margin:5px 0 0 0;">50%</progress>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <i class="fa fa-cc-mastercard" style="font-size:24px"></i>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">Last login</div>
-                                        <strong>10 sec ago</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-xs-center">
-                                        <div class="avatar">
-                                            <img src="assets/img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                                            <span class="avatar-status tag-danger"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Avram Tarasios</div>
-                                        <div class="small text-muted">
-                                            <span>Recurring</span> | Registered: Jan 1, 2015
-                                        </div>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <img src="assets/img/flags/Brazil.png" alt="Brazil" style="height:24px;">
-                                    </td>
-                                    <td>
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <strong>10%</strong>
-                                            </div>
-                                            <div class="pull-right">
-                                                <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                            </div>
-                                        </div>
-                                        <progress class="progress progress-xs progress-info" value="10" max="100" style="margin:5px 0 0 0;">10%</progress>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <i class="fa fa-cc-visa" style="font-size:24px"></i>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">Last login</div>
-                                        <strong>5 minutes ago</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-xs-center">
-                                        <div class="avatar">
-                                            <img src="assets/img/avatars/3.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                                            <span class="avatar-status tag-warning"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Quintin Ed</div>
-                                        <div class="small text-muted">
-                                            <span>New</span> | Registered: Jan 1, 2015
-                                        </div>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <img src="assets/img/flags/India.png" alt="India" style="height:24px;">
-                                    </td>
-                                    <td>
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <strong>74%</strong>
-                                            </div>
-                                            <div class="pull-right">
-                                                <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                            </div>
-                                        </div>
-                                        <progress class="progress progress-xs progress-warning" value="74" max="100" style="margin:5px 0 0 0;">74%</progress>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <i class="fa fa-cc-stripe" style="font-size:24px"></i>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">Last login</div>
-                                        <strong>1 hour ago</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-xs-center">
-                                        <div class="avatar">
-                                            <img src="assets/img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                                            <span class="avatar-status tag-default"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Enéas Kwadwo</div>
-                                        <div class="small text-muted">
-                                            <span>New</span> | Registered: Jan 1, 2015
-                                        </div>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <img src="assets/img/flags/France.png" alt="France" style="height:24px;">
-                                    </td>
-                                    <td>
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <strong>98%</strong>
-                                            </div>
-                                            <div class="pull-right">
-                                                <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                            </div>
-                                        </div>
-                                        <progress class="progress progress-xs progress-danger" value="98" max="100" style="margin:5px 0 0 0;">98%</progress>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <i class="fa fa-paypal" style="font-size:24px"></i>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">Last login</div>
-                                        <strong>Last month</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-xs-center">
-                                        <div class="avatar">
-                                            <img src="assets/img/avatars/5.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                                            <span class="avatar-status tag-success"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Agapetus Tadeáš</div>
-                                        <div class="small text-muted">
-                                            <span>New</span> | Registered: Jan 1, 2015
-                                        </div>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <img src="assets/img/flags/Spain.png" alt="Spain" style="height:24px;">
-                                    </td>
-                                    <td>
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <strong>22%</strong>
-                                            </div>
-                                            <div class="pull-right">
-                                                <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                            </div>
-                                        </div>
-                                        <progress class="progress progress-xs progress-info" value="22" max="100" style="margin:5px 0 0 0;">22%</progress>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <i class="fa fa-google-wallet" style="font-size:24px"></i>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">Last login</div>
-                                        <strong>Last week</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-xs-center">
-                                        <div class="avatar">
-                                            <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                                            <span class="avatar-status tag-danger"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>Friderik Dávid</div>
-                                        <div class="small text-muted">
-                                            <span>New</span> | Registered: Jan 1, 2015
-                                        </div>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <img src="assets/img/flags/Poland.png" alt="Poland" style="height:24px;">
-                                    </td>
-                                    <td>
-                                        <div class="clearfix">
-                                            <div class="pull-left">
-                                                <strong>43%</strong>
-                                            </div>
-                                            <div class="pull-right">
-                                                <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                            </div>
-                                        </div>
-                                        <progress class="progress progress-xs progress-success" value="43" max="100" style="margin:5px 0 0 0;">43%</progress>
-                                    </td>
-                                    <td class="text-xs-center">
-                                        <i class="fa fa-cc-amex" style="font-size:24px"></i>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">Last login</div>
-                                        <strong>Yesterday</strong>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
+                            .Name("grid")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(p => p.Id)
+                                       .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= Id #\");'><span class='fa fa-edit' /></a><a class='btn btn-danger' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
+                                       .Title("").Width(100);
+                                columns.Bound(p => p.Title).Width(150);
+                                columns.Bound(p => p.StatusDescription).Width(180);
+                                columns.Bound(p => p.ProjectName).Width(180);
+                                columns.Bound(p => p.AssignedToName).Width(180);
+
+                            })
+                            .Scrollable()
+                            .Sortable()
+                            .Pageable(pageable => pageable
+                                .PageSizes(true)
+                                .ButtonCount(5)
+                            )
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(20)
+                                .Read(read => read.Action("Issues_Read", "Issue"))
+                            )
+                        )
                     </div>
                 </div>
             </div>

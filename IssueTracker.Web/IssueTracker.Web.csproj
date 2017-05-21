@@ -166,7 +166,6 @@
     <Content Include="Static\coreUI-theme\gulpfile.js" />
     <Content Include="Static\coreUI-theme\img\favicon.png" />
     <Content Include="Static\coreUI-theme\img\logo.png" />
-    <Content Include="Static\coreUI-theme\index.html" />
     <Content Include="Static\coreUI-theme\js\app.js" />
     <Content Include="Static\css\about.css" />
     <Content Include="Static\css\calendar.css" />
@@ -318,7 +317,6 @@
     <Content Include="Static\coreUI-theme\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Static\coreUI-theme\fonts\Simple-Line-Icons.woff" />
     <Content Include="Static\coreUI-theme\fonts\Simple-Line-Icons.woff2" />
-    <Content Include="Static\coreUI-theme\package.json" />
     <Content Include="Static\coreUI-theme\scss\bootstrap\bootstrap-grid.scss" />
     <Content Include="Static\coreUI-theme\scss\bootstrap\bootstrap-reboot.scss" />
     <Content Include="Static\coreUI-theme\scss\bootstrap\bootstrap.scss" />

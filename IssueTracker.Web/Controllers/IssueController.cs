@@ -11,7 +11,8 @@ namespace IssueTracker.Web.Controllers
         // GET: Issue
         public ActionResult Index()
         {
-            return View("Issues");
+            return View("List");
         }
+
     }
 }

@@ -44,5 +44,10 @@ namespace IssueTracker.Web.Controllers
         }
         #endregion
 
+        public ActionResult GetStatusStats(Models.IssueListFilterVM filter)
+        {
+            var data = issueService.GetStatusStats(null, null);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

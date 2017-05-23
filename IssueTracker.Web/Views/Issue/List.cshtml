@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "List";
 }
+@model IssueTracker.Web.Models.IssueFilterFormVM
 <div class="sidebar">
     <nav class="sidebar-nav">
 
@@ -9,18 +10,6 @@
 
 <!-- Main content -->
 <main class="main">
-
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Account list</a></li>
-        <!-- add button -->
-        <li class="breadcrumb-menu hidden">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <a class="btn btn-secondary" href="./"><i class="icon-plus"></i> &nbsp;Add new account</a>
-            </div>
-        </li>
-    </ol>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col">
@@ -30,31 +19,21 @@
                             <div class="col">
                                 <div class="form-horizontal ">
                                     <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="text-input">Title</label>
+                                        <label class="col-md-3 form-control-label" for="select">Status</label>
                                         <div class="col-md-9">
-                                            <input type="text" id="title-issue" name="IssueTitle" class="form-control" placeholder="title-issue">
+                                            @Html.DropDownList("IssueStatus", @Model.Status, new { @class = "form-control", id = "IssueStatus" })
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="select">Select</label>
+                                        <label class="col-md-3 form-control-label" for="select">Client</label>
                                         <div class="col-md-9">
-                                            <select id="IssueStatus" name="IssueStatus" class="form-control" size="1">
-                                                <option value="0">Please select</option>
-                                                <option value="1">Option #1</option>
-                                                <option value="2">Option #2</option>
-                                                <option value="3">Option #3</option>
-                                            </select>
+                                            @Html.DropDownList("IssueClient", @Model.Client, new { @class = "form-control", id = "IssueClient" })
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="select">Select Large</label>
+                                        <label class="col-md-3 form-control-label" for="select">Project</label>
                                         <div class="col-md-9">
-                                            <select id="IssueProject" name="IssueProject" class="form-control" size="1">
-                                                <option value="0">Please select</option>
-                                                <option value="1">Option #1</option>
-                                                <option value="2">Option #2</option>
-                                                <option value="3">Option #3</option>
-                                            </select>
+                                            @Html.DropDownList("IssueProject", @Model.Project, new { @class = "form-control", id = "IssueProject" })
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +42,7 @@
                             <div class="col">
                                 <div class="form-horizontal ">
                                     <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="select">Select</label>
+                                        <label class="col-md-3 form-control-label" for="select">Assigned Status</label>
                                         <div class="col-md-9">
                                             <select id="IssueAssigned" name="IssueAssigned" class="form-control" size="1">
                                                 <option value="0">All</option>
@@ -73,14 +52,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="select">Select Large</label>
+                                        <label class="col-md-3 form-control-label" for="select">Priority</label>
                                         <div class="col-md-9">
-                                            <select id="IssuePriority" name="IssuePriority" class="form-control" size="1">
-                                                <option value="0">Please select</option>
-                                                <option value="1">Option #1</option>
-                                                <option value="2">Option #2</option>
-                                                <option value="3">Option #3</option>
-                                            </select>
+                                            @Html.DropDownList("IssuePriority", @Model.Priority, new { @class = "form-control", id = "IssuePriority" })
                                         </div>
                                     </div>
 
@@ -88,7 +62,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col text-center">
                                 <button class="btn btn-info">search</button>
                             </div>
                         </div>
@@ -97,57 +71,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col">
                 <div class="card">
-                    <div class="card-block" style="padding:3px 3px;">
-                        <div class="row" style="display:none">
-
-                                <div class="col-sm-6 col-md-2">
-                                    <div class="callout callout-default">
-                                        <small class="text-muted">Not Assigned</small>
-                                        <br>
-                                        <strong class="h4" id="notassigned-issue">9,123</strong>
-                                    </div>
-                                </div>
-                                <!--/.col-->
-                                <div class="col-sm-6 col-md-2">
-                                    <div class="callout callout-info">
-                                        <small class="text-muted">Assigned</small>
-                                        <br>
-                                        <strong class="h4" id="assigned-issue">22,643</strong>
-                                    </div>
-                                </div>
-                                <!--/.col-->
-                                <div class="col-sm-6 col-md-2">
-                                    <div class="callout callout-warning">
-                                        <small class="text-muted">On Progress</small>
-                                        <br>
-                                        <strong class="h4" id="onprogress-issue">22,643</strong>
-                                    </div>
-                                </div>
-                                <!--/.col-->
-                                <div class="col-sm-6 col-md-2">
-                                    <div class="callout callout-success">
-                                        <small class="text-muted">Closed</small>
-                                        <br>
-                                        <strong class="h4" id="closed-issue">22,643</strong>
-                                    </div>
-                                </div>
-                                <!--/.col-->
-                                <div class="col-sm-6 col-md-3">
-                                    <div class="callout callout-danger">
-                                        <small class="text-muted">Suspended</small>
-                                        <br>
-                                        <strong class="h4" id="suspended-issue">22,643</strong>
-                                    </div>
-                                </div>
-                                <!--/.col-->
-                            <!--/.row-->
-                            <hr class="m-t-0">
-                            <!--/.col-->
-                        </div>
-                        <!--/.row-->
-                        <br>
+                    <div class="card-block" style="padding:1px 1px;">
                         @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
                             .Name("grid")
                             .Columns(columns =>
@@ -156,9 +82,12 @@
                                        .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= Id #\");'><span class='fa fa-edit' /></a><a class='btn btn-danger' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
                                        .Title("").Width(100);
                                 columns.Bound(p => p.Title).Width(150);
-                                columns.Bound(p => p.StatusDescription).Width(180);
+                                
+                                
                                 columns.Bound(p => p.ProjectName).Width(180);
                                 columns.Bound(p => p.AssignedToName).Width(180);
+                                columns.Bound(p => p.ProjectName).Width(60).ClientTemplate("<span class='priority-issue'>#: PriorityName #</span>");
+                                columns.Bound(p => p.StatusDescription).Width(180);
 
                             })
                             .Scrollable()

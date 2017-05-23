@@ -8,6 +8,7 @@ using System.Web.Security;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using cf = System.Configuration.ConfigurationManager;
+using IssueTracker.Web.Security;
 
 namespace IssueTracker.Web.Controllers
 {
@@ -17,15 +18,15 @@ namespace IssueTracker.Web.Controllers
         private Service.Interface.IAccount accountService;
         private Service.Interface.IClient clientService;
         private Service.Interface.IIssue issueService;
-
+        private readonly string _cnString;
         #region ctor
 
         public IssueController()
         {
-            var cn = cf.AppSettings["active-cn"];
-            accountService = new Service.Account(cn);
-            clientService = new Service.Client(cn);
-            issueService = new Service.Issue(cn);
+            _cnString = cf.AppSettings["active-cn"];
+            accountService = new Service.Account(_cnString);
+            clientService = new Service.Client(_cnString);
+            issueService = new Service.Issue(_cnString);
         }
 
         #endregion
@@ -33,19 +34,25 @@ namespace IssueTracker.Web.Controllers
         // GET: Issue
         public ActionResult Index()
         {
-            return View("List");
+            var filter = GetListVM();
+            return View("List", filter);
         }
         // GET: Issue/List
         public ActionResult List()
         {
-            return View();
+            var filter = GetListVM();
+            return View(filter);
         }
 
+        private Models.IssueFilterFormVM GetListVM()
+        {
+            return new Models.IssueFilterFormVM(_cnString, (User as CustomPrincipal).ClientId);
+        }
         #region datagrid
         public ActionResult Issues_Read([DataSourceRequest] DataSourceRequest request, Models.IssueListFilterVM filter)
         {
-            
-            return Json(issueService.GetList(User.Identity.Name,null).ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+            var usr = (User as CustomPrincipal).AccountId;
+            return Json(issueService.GetList(usr, null).ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
         #endregion
 

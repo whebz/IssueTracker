@@ -54,6 +54,7 @@
     <Compile Include="Issue.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -35,6 +35,11 @@ namespace IssueTracker.Web.Controllers
         {
             return View("List");
         }
+        // GET: Issue/List
+        public ActionResult List()
+        {
+            return View();
+        }
 
         #region datagrid
         public ActionResult Issues_Read([DataSourceRequest] DataSourceRequest request, Models.IssueListFilterVM filter)

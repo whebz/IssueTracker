@@ -190,6 +190,8 @@
     <Content Include="Static\css\logIn.css" />
     <Content Include="Static\css\Site_save.css" />
     <Content Include="Static\css\tasks.css" />
+    <Content Include="Static\image\logo.png" />
+    <Content Include="Static\image\logomini.png" />
     <Content Include="Static\js\calendar.js" />
     <Content Include="Static\js\account.js" />
     <Content Include="Static\js\layout.js" />
@@ -455,6 +457,7 @@
     <Content Include="Views\Issue\List.cshtml" />
     <Content Include="Views\Issue\_SideBarIssueList.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Issue\IssueForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">

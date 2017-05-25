@@ -1,0 +1,18 @@
+﻿/* HEADER */
+.main-header {
+    max-height: 150px;
+}
+
+    .main-header .logo {
+        padding: 0;
+    }
+
+    .main-header .logo-lg {
+        background: url(../img/logo.png) no-repeat 50% 50%;
+        height: 50px;
+    }
+
+    .main-header .logo-mini {
+        background: url(../img/logomini.png) no-repeat 50% 50%;
+        height: 50px;
+    }

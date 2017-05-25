@@ -64,16 +64,55 @@ namespace IssueTracker.Web.Controllers
 
         #region Form
 
-        public ActionResult IssueForm(int? id)
+        private Models.IssueFormVM GetFormData(int? id)
         {
-            var model = new Models.IssueFormVM();
-            model.Issue = new Model.Issue();
-
+            var data = GetListVM();
+            var model = new Models.IssueFormVM()
+            {
+                HeaderText = "New Issues",
+                IssueStatus = data.Status,
+                PriorityId = data.Priority,
+                ProjectId = data.Project,
+                AssignTo = new List<SelectListItem>(),
+                Issue = new Model.Issue()
+            };
             if (id.HasValue)
-                ;
-            return View(model);
+            {
+                model.HeaderText = "Edit Issue";
+                model.Issue = issueService.GetById(id.Value);
+                model.IssueStatus.FirstOrDefault(w => w.Value == model.Issue.IssueStatus).Selected = true;
+                model.PriorityId.FirstOrDefault(w => w.Value == model.Issue.PriorityId.ToString()).Selected = true;
+                model.ProjectId.FirstOrDefault(w => w.Value == model.Issue.ProjectId.ToString()).Selected = true;
+                model.AssignTo.FirstOrDefault(w => w.Value == model.Issue.AssignTo).Selected = true;
+            }
+            else
+            {
+                model.IssueStatus.First(w => w.Value == "N").Selected = true;
+            }
+            return model;
         }
 
+        public ActionResult IssueForm(int? id)
+        {       
+            return View(GetFormData(id));
+        }
+
+        [HttpPost]
+        public ActionResult IssueForm(Model.Issue data, string state)
+        {
+            string resp = null;
+            if (state == "I")
+                resp = issueService.Add(data);
+            else
+                resp = issueService.Update(data);
+            if (string.IsNullOrEmpty(resp))
+                return RedirectToAction("List", "Issue");
+            ViewBag.ErrMsg = resp;
+            int? id = null;
+            if (data.Id > 0)
+                id = data.Id;
+            return View(GetFormData(id));
+        }
         #endregion
     }
 }

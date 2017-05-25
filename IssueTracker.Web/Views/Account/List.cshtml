@@ -3,74 +3,62 @@
     ViewBag.Title = "List";
 }
 @model IEnumerable<IssueTracker.Model.ViewModel.AccountByType>
-<style>
-    body, .main, .container-fluid {
-        overflow: hidden;
-    }
-</style>
 
-@*<div class="sidebar">
-    <nav class="sidebar-nav">
-        @Html.Partial("_ListSummary", Model)
-    </nav>
-</div>*@
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Accounts
+    </h1>
+    <div class="pull-right">
+        <a href="#" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Add new
+        </a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                Export
+            </button>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">&nbsp;</span>
+            </button>
+        </div>
+    </div>
+</div>
 
-<!-- Main content -->
-<main class="main">
-
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">&nbsp;</li>        
-        <!-- add button -->
-        <li class="breadcrumb-menu hidden">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <a class="btn btn-secondary" href="./"><i class="icon-plus"></i> &nbsp;Add new account</a>
-            </div>
-        </li>
-    </ol>
-
-    <div class="container-fluid" style="padding:5px; margin: 0">
-        <div class="row" id="filter-row">
-            <div class="col">
-                <div class="card card-default">
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-horizontal ">
-                                    <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="select">Status</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="AccountName" class="form-control" />
-                                        </div>
-                                    </div>
-
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label for="AccountName">Name</label>
                                 </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-horizontal ">
-                                    <div class="form-group row">
-                                        <label class="col-md-3 form-control-label" for="select">Client</label>
-                                        <div class="col-md-9">
-                                            @*@Html.DropDownList("IssueClient", @Model.Client, new { @class = "form-control", id = "IssueClient" })*@
-                                        </div>
-                                    </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="AccountName" class="form-control" />
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col text-center">
-                                <button class="btn btn-info">search</button>
-                            </div>
+                        <div class="col-md-7">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-5">
+                            <button type="button" id="search-orders" class="btn btn-primary btn-search">
+                                <i class="fa fa-search"></i>
+                                Search
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-block" id="grid-block" style="padding:1px 1px;">
-                        @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.AccountViewModel>()
+            <div class="panel panel-default" id="grid-panel" style="margin-bottom:5px">
+                <div class="panel-body">
+                    @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.AccountViewModel>()
                             .Name("grid")
                             .Columns(columns =>
                             {
@@ -85,7 +73,6 @@
                             })
                             .Scrollable()
                             .Sortable()
-                            .HtmlAttributes(new { style = "height: 100%" })
                             .Pageable(pageable => pageable
                                 .PageSizes(true)
                                 .ButtonCount(5)
@@ -100,26 +87,25 @@
                                 .PageSize(20)
                                 .Read(read => read.Action("Accounts_Read", "Account"))
                             )
-                        )
-                    </div>
+                            .HtmlAttributes(new { style = "height: 100%" })
+                    )
                 </div>
             </div>
-            <!--/.col-->
         </div>
     </div>
-    <!-- /.conainer-fluid -->
-</main>
+</div>
+
 <script>
     var grid;
     $(document).ready(function () {
-        $(window).on('resize', function () {
-            setGridBlockSize();
-        });
-        setGridBlockSize();
         grid = $("#grid").data("kendoGrid");
+        setGridBlockSize();
     });
     function setGridBlockSize() {
-        $("#grid-block").height($(window).height() - $(".app-header").outerHeight() - $(".breadcrumb").outerHeight() - $("#filter-row").outerHeight() - $(".app-footer").outerHeight() - 34);
+        var h = ($(window).height() - $(".panel-search").outerHeight() - $(".content-header").outerHeight() -
+            $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 60);
+        $("#grid-panel").height(h);
+        $("#grid").height(h - 25);
     }
     function destroyAccount(id) {
         var r = confirm("Sei sicuro di voler cancellare l'account?");

@@ -54,6 +54,15 @@ namespace IssueTracker.Service
             return null;
         }
 
+        public Model.Issue GetById(int id)
+        {
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<IssueViewModel>(
+                    "IssueById",
+                    new { @id = id },
+                    commandType: CommandType.StoredProcedure).FirstOrDefault();
+        }
+
         public IEnumerable<IssueViewModel> GetList(string accountId, string filter)
         {
             using (var sql = new SqlConnection(_cnstring))

@@ -408,7 +408,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Views\Issue\Issues.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Static\plugin\kendo\js\jquery.min.map" />

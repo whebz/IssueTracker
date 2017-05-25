@@ -2,16 +2,11 @@
 @{
     ViewBag.Title = "IssueForm";
 }
-﻿@model IssueTracker.Model.Issue
-@{
-    //page title
-    ViewBag.Title = "";//T("Admin.Customers.Customers.AddNew").Text;
-    //active menu item (system name)
-    //Html.SetActiveMenuItemSystemName("Customers list");
-}
+﻿@model IssueTracker.Web.Models.IssueFormVM
+
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+    
     <div class="content-header clearfix">
         <h1 class="pull-left">
             
@@ -26,248 +21,128 @@
                 Save
             </button>
             <button type="submit" name="save-continue" class="btn bg-blue">
-                <i class="fa fa-floppy-o"></i>
+                <i class="fa fa-undo"></i>
                 Cancel
             </button>
         </div>
     </div>
-    <div>
-
-
-        <form action="/Admin/Customer/Create" method="post" novalidate="novalidate">
-            <input name="__RequestVerificationToken" type="hidden" value="WukRxUfmcl5o1HDrR2Psogy1Vn6xSUHigeBguG19NpkoYJizPIOx7s2Lf8WvL4jI2NzjKup-AjCUtc2jouzw4SDP-06h3fMRjRfFxbMB4KpONebY0">    <div class="content-header clearfix">
-                <h1 class="pull-left">
-                    Add a new customer
-                    <small><i class="fa fa-arrow-circle-left"></i><a href="/Admin/Customer/List">back to customer list</a></small>
-                </h1>
-                <div class="pull-right">
-                    <button type="submit" name="save" class="btn bg-blue">
-                        <i class="fa fa-floppy-o"></i>
-                        Save
-                    </button>
-                    <button type="submit" name="save-continue" class="btn bg-blue">
-                        <i class="fa fa-floppy-o"></i>
-                        Save and Continue Edit
-                    </button>
-                </div>
-            </div>
-            <div class="validation-summary-valid" data-valmsg-summary="true">
-                <ul>
-                    <li style="display:none"></li>
+    <div class="content">
+        <div class="form-horizontal">
+            <div id="customer-edit" class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info">Issue Info</a></li>
                 </ul>
-            </div>
-            <input data-val="true" data-val-number="The field Id must be a number." data-val-required="'Id' must not be empty." id="Id" name="Id" type="hidden" value="0">
-
-            <script>
-    $(document).ready(function() {
-        bindBootstrapTabSelectEvent('customer-edit');
-    });
-            </script>
-
-            <div class="content">
-                <div class="form-horizontal">
-                    <div id="customer-edit" class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info">Customer info</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab-info">
-                                <div class="panel-group">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-info">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group" id="input-createby">
+                                                <div class="col-md-4">
+                                                    <label for="AssignTo">Author</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="hidden" name="CreateBy" id="CreateBy" value="@Model.Issue.CreateBy ?? ((User as IssueTracker.Web.Security.CustomPrincipal).Name)" />
+                                                    @((User as IssueTracker.Web.Security.CustomPrincipal).Name)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="ProjectId">Project</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Html.DropDownList("ProjectId", @Model.PriorityId, new { @class = "form-control", id = "ProjectId", })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="AssignTo">Assign To</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Html.DropDownList("AssignTo", @Model.AssignTo, new { @class = "form-control", id = "AssignTo", })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="IssueStatus">Status</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Html.DropDownList("IssueStatus", @Model.IssueStatus, new { @class = "form-control", id = "IssueStatus" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="PriorityId">Priority</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Html.DropDownList("PriorityId", @Model.PriorityId, new { @class = "form-control", id = "PriorityId", multiple = "multiple" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="IssueType">Type</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <select id="IssueType" name="IssueType" class="form-control">
+                                                        <option selected="selected">Bug</option>
+                                                        <option>New feature</option>
+                                                        <option>Other</option>
+                                                    </select>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right">
+                                            <label class="control-label" for="Title">
+                                                Subject
+                                                <span class="ico-help" title="The customer's email.">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.TextBox("Title", Model.Issue.Title, new { @class = "form-control" })
+                                        </div>
+                                    </div>
                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Description
+                                        </div>
                                         <div class="panel-body">
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="Email" title="">Email</label><div class="ico-help" title="The customer's email."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input class="form-control text-box single-line" data-val="true" data-val-length="'Email' must be between 0 and 1000 characters." data-val-length-max="1000" id="Email" name="Email" type="text" value="">
-                                                    <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="Password" title="">Password</label><div class="ico-help" title="The customer's password."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <input class="form-control text-box single-line password" id="Password" name="Password" type="password" value="">
-                                                        <div class="input-group-btn">
-                                                        </div>
-                                                    </div>
-                                                    <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="SelectedCustomerRoleIds" title="">Customer roles</label><div class="ico-help" title="Choose customer roles of this user."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="input-group input-group-required">
-                                                        <div class="k-widget k-multiselect k-header" unselectable="on" style=""><div class="k-multiselect-wrap k-floatwrap" unselectable="on"><ul role="listbox" unselectable="on" class="k-reset" id="SelectedCustomerRoleIds_taglist"><li class="k-button" unselectable="on"><span unselectable="on">Registered</span><span unselectable="on" class="k-icon k-delete">delete</span></li></ul><input class="k-input" style="width: 25px" accesskey="" role="listbox" aria-expanded="false" tabindex="0" aria-owns="SelectedCustomerRoleIds_taglist SelectedCustomerRoleIds_listbox" aria-disabled="false" aria-readonly="false" aria-busy="false"><span class="k-icon k-loading k-loading-hidden"></span></div><select id="SelectedCustomerRoleIds" multiple="multiple" name="SelectedCustomerRoleIds" data-role="multiselect" aria-disabled="false" aria-readonly="false" style="display: none;"><option value="1">Administrators</option><option value="2">Forum Moderators</option><option value="4">Guests</option><option value="3">Registered</option><option value="5">Vendors</option></select><span style="font-family: &quot;Source Sans Pro&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-stretch: normal; font-style: normal; font-weight: normal; letter-spacing: normal; text-transform: none; line-height: 18.34px; position: absolute; visibility: hidden; top: -3333px; left: -3333px;"></span></div>
-                                                        <script>
-    $(document).ready(function() {
-        $("#SelectedCustomerRoleIds").kendoMultiSelect({
-            select: function (e) {
-                var current = this.value();
-
-                if (this.dataSource.view()[e.item.index()].value === "0") {
-                    this.value("");
-                }
-                else if (current.indexOf("0") !== -1) {
-                    current = $.grep(current, function (value) {
-                        return value !== "0";
-                    });
-
-                    this.value(current);
-                }
-            },
-            change: function (e) {
-                if (this.value().length === 0)
-                    this.value(["0"]);
-            }
-        }).data("kendoMultiSelect");
-    });
-                                                        </script>
-                                                        <div class="input-group-btn">
-                                                            <span class="required">*</span>
-                                                        </div>
-                                                    </div>
-                                                    <script>
-                        $(document).ready(function() {
-                            var customerRolesIdsInput = $('#SelectedCustomerRoleIds').data("kendoMultiSelect");
-                            customerRolesIdsInput.setOptions({
-                                customerRolesIdsInput: false
-                            });
-
-                        });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="VendorId" title="">Manager of vendor</label><div class="ico-help" title="Choose a vendor associated to this customer account. When associated this customer will be able to login to the chosen vendor portal and manage his products and orders."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <select class="form-control" data-val="true" data-val-number="The field Manager of vendor must be a number." data-val-required="'Vendor Id' must not be empty." id="VendorId" name="VendorId">
-                                                        <option selected="selected" value="0">Not a vendor</option>
-                                                        <option value="1">Vendor 1</option>
-                                                        <option value="2">Vendor 2</option>
-                                                    </select>
-                                                    <span class="field-validation-valid" data-valmsg-for="VendorId" data-valmsg-replace="true"></span>
-                                                    <em>Note: if you have a vendor associated with this customer, then also ensure it is in "Vendors" customer role.</em>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="Gender" title="">Gender</label><div class="ico-help" title="The customer's gender."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="raw">
-                                                        <div class="col-md-1">
-                                                            <div class="radio">
-                                                                <label>
-                                                                    <input id="Gender_Male" name="Gender" type="radio" value="M">
-                                                                    Male
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-11">
-                                                            <div class="radio">
-                                                                <label>
-                                                                    <input id="Gender_Female" name="Gender" type="radio" value="F">
-                                                                    Female
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="FirstName" title="">First name</label><div class="ico-help" title="The customer's first name."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input class="form-control text-box single-line" id="FirstName" name="FirstName" type="text" value="">
-                                                    <span class="field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="LastName" title="">Last name</label><div class="ico-help" title="The customer's last name."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input class="form-control text-box single-line" id="LastName" name="LastName" type="text" value="">
-                                                    <span class="field-validation-valid" data-valmsg-for="LastName" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="DateOfBirth" title="">Date of birth</label><div class="ico-help" title="The customer's date of birth."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <span class="k-widget k-datepicker k-header"><span class="k-picker-wrap k-state-default"><input id="DateOfBirth" name="DateOfBirth" data-role="datepicker" type="text" class="k-input" role="combobox" aria-expanded="false" aria-owns="DateOfBirth_dateview" aria-disabled="false" aria-readonly="false" style="width: 100%;"><span unselectable="on" class="k-select" role="button" aria-controls="DateOfBirth_dateview"><span unselectable="on" class="k-icon k-i-calendar">select</span></span></span></span>
-                                                    <script>
-    $(document).ready(function () {
-        $("#DateOfBirth").kendoDatePicker();
-    });
-                                                    </script>
-                                                    <span class="field-validation-valid" data-valmsg-for="DateOfBirth" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="Company" title="">Company name</label><div class="ico-help" title="The company name."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input class="form-control text-box single-line" id="Company" name="Company" type="text" value="">
-                                                    <span class="field-validation-valid" data-valmsg-for="Company" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="AdminComment" title="">Admin comment</label><div class="ico-help" title="Admin comment. For internal use."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <textarea class="form-control" cols="20" id="AdminComment" name="AdminComment" rows="4"></textarea>
-                                                    <span class="field-validation-valid" data-valmsg-for="AdminComment" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="IsTaxExempt" title="">Is tax exempt</label><div class="ico-help" title="Determines whether the customer is tax exempt."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input class="check-box" data-val="true" data-val-required="'Is Tax Exempt' must not be empty." id="IsTaxExempt" name="IsTaxExempt" type="checkbox" value="true"><input name="IsTaxExempt" type="hidden" value="false">
-                                                    <span class="field-validation-valid" data-valmsg-for="IsTaxExempt" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="SelectedNewsletterSubscriptionStoreIds" title="">Newsletter</label><div class="ico-help" title="Check to subscribe to newsletter."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" name="SelectedNewsletterSubscriptionStoreIds" value="1">
-                                                            (Your store name)
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" name="SelectedNewsletterSubscriptionStoreIds" value="2">
-                                                            (Test store 2)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-3">
-                                                    <div class="label-wrapper"><label class="control-label" for="Active" title="">Active</label><div class="ico-help" title="Is this customer's account active. To disable/suspend a customer's account, uncheck this."><i class="fa fa-question-circle"></i></div></div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input checked="checked" class="check-box" data-val="true" data-val-required="'Active' must not be empty." id="Active" name="Active" type="checkbox" value="true"><input name="Active" type="hidden" value="false">
-                                                    <span class="field-validation-valid" data-valmsg-for="Active" data-valmsg-replace="true"></span>
-                                                </div>
+                                            <div class="col-md-12">
+                                                @(Html.Kendo().Editor()
+                                                    .Name("Description")
+                                                    .HtmlAttributes(new { style = "width: 100%;height:440px" })
+                                                    .Tools(tools => tools
+                                                        .Clear()
+                                                        .Bold().Italic().Underline().Strikethrough()
+                                                        .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                                                        .InsertUnorderedList().InsertOrderedList()
+                                                        .Outdent().Indent()
+                                                        .CreateLink().Unlink()
+                                                        .InsertImage()
+                                                        .InsertFile()
+                                                        .SubScript()
+                                                        .SuperScript()
+                                                        .TableEditing()
+                                                        .ViewHtml()
+                                                        .Formatting()
+                                                        .CleanFormatting()
+                                                        .FontName()
+                                                        .FontSize()
+                                                        .FontColor().BackColor()
+                                                        .Print()
+                                                        .ExportAs()
+                                                    )
+                                                    .Value(@<text>@Model.Issue.Description</text>)
+                                                )
                                             </div>
                                         </div>
                                     </div>
@@ -277,21 +152,8 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-            <input type="hidden" id="selected-tab-name" name="selected-tab-name" value="">
-
-
-
-
-
-
-
-
-
-        </form>
+        </div>
     </div>
+
 }
 

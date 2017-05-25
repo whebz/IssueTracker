@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="Models\AccountEditorVM.cs" />
     <Compile Include="Models\IssueFilterFormVM.cs" />
+    <Compile Include="Models\IssueFormVM.cs" />
     <Compile Include="Models\IssueListFilterVM.cs" />
     <Compile Include="Models\IssueListVMcs.cs" />
     <Compile Include="Models\Login.cs" />

@@ -61,5 +61,19 @@ namespace IssueTracker.Web.Controllers
             var data = issueService.GetStatusStats(null, null);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        #region Form
+
+        public ActionResult IssueForm(int? id)
+        {
+            var model = new Models.IssueFormVM();
+            model.Issue = new Model.Issue();
+
+            if (id.HasValue)
+                ;
+            return View(model);
+        }
+
+        #endregion
     }
 }

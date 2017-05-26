@@ -9,7 +9,7 @@
         Accounts
     </h1>
     <div class="pull-right">
-        <a href="#" class="btn bg-blue">
+        <a href="@Url.Action("Edit", "Account")" class="btn bg-blue">
             <i class="fa fa-plus-square"></i>
             Add new
         </a>
@@ -32,7 +32,7 @@
             <div class="panel panel-default panel-search">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label for="AccountName">Name</label>
@@ -42,12 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            &nbsp;
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-5">
+                        <div class="col-md-4">
                             <button type="button" id="search-orders" class="btn btn-primary btn-search">
                                 <i class="fa fa-search"></i>
                                 Search
@@ -63,8 +58,11 @@
                             .Columns(columns =>
                             {
                                 columns.Bound(p => p.AccountId)
-                                       .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= AccountId #\");'><span class='fa fa-edit' /></a><a class='btn btn-danger' onclick='destroyAccount(\"#= AccountId #\");'><span class='fa fa-remove' /></a>")
-                                       .Title("").Width(100);
+                                       .ClientTemplate("<a class='btn btn-default' onclick='edit(\"#= AccountId #\");'><span class='fa fa-edit' /></a>")
+                                       .Title("edit").Width(40);
+                                columns.Bound(p => p.AccountId)
+                                       .ClientTemplate("<a class='btn btn-danger' onclick='destroyAccount(\"#= AccountId #\");'><span class='fa fa-remove' /></a>")
+                                       .Title("delete").Width(40);
                                 columns.Bound(p => p.AccountId).Width(150);
                                 columns.Bound(p => p.Name).Width(180);
                                 columns.Bound(p => p.AccountType).Width(180);

@@ -1,117 +1,194 @@
 ﻿@model IssueTracker.Web.Models.AccountEditorVM
-<div class="sidebar">
-    <nav class="sidebar-nav">
-        @Html.Partial("_ListSummary", (IEnumerable<IssueTracker.Model.ViewModel.AccountByType>)@ViewBag.AccountSummary)
-    </nav>
-</div>
-<!-- Main content -->
-<main class="main">
-
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Account list</a></li>
-    </ol>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-@using (Html.BeginForm("Edit", "Account",  FormMethod.Post,
-                                                  new { enctype = "multipart/form-data" }))
-{
-                        <div class="card-header">
-
-                            @if (Model.ActionState == "I")
-                            { <strong>Nuovo </strong> }
-                            else
-                            { <strong>Modifica </strong> } Account
-                        </div>
-                        <div class="card-block">
-
-                            <div class="form-group row">
-                                <label class="col-md-3 form-control-label">Account Id</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">@Model.Account.AccountId</p>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Name</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Text" value="@Model.Account.Name">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="Email">Email</label>
-                                <div class="col-md-9">
-                                    <input type="email" id="Email" name="Email" class="form-control" placeholder="Enter Email" value="@Model.Account.Email">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="select">Account Type</label>
-                                <div class="col-md-9">
-                                    @(Html.Kendo().DropDownListFor(m => m.Account.AccountTypeId)
-                        .Name("AccountTypeId")
-                        .DataTextField("Description")
-                        .DataValueField("Id")
-                        .DataSource(source =>
-                        {
-                            source.Read(read =>
-                            {
-                                read.Action("GetAccountType", "Account");
-                            });
-                        })
-                        .HtmlAttributes(new { @class = "form-control input-sm" }))
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="select">Company</label>
-                                <div class="col-md-9">
-                                    @(Html.Kendo().DropDownListFor(m => m.Account.ClientId)
-                        .Name("ClientId")
-                        .DataTextField("Name")
-                        .DataValueField("Id")
-                        .DataSource(source =>
-                        {
-                            source.Read(read =>
-                            {
-                                read.Action("GetClient", "Account");
-                            });
-                        })
-                        .HtmlAttributes(new { @class = "form-control input-sm" }))
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="country">Phone</label>
-                                <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Country name" value="@Model.Account.Phone">
-                            </div>
-                            <div class="form-group">
-                                <label for="country">City</label>
-                                <input type="text" class="form-control" name="City" id="City" placeholder="City name" value="@Model.Account.City">
-                            </div>
-                            <div class="form-group">
-                                <label for="country">Country</label>
-                                <input type="text" class="form-control" id="Country" value="@Model.Account.Country">
-                            </div>
-                            <input type="hidden" name="CreatedDate" id="CreatedDate" value="@Model.Account.CreatedDate" />
-                            <input type="hidden" name="AccountId" id="AccountId" value="@Model.Account.AccountId" />
-                        </div>
-                        <div class="card-footer right">
-                            <button type="submit" class="btn btn-sm btn-primary" name="state" value="@Model.ActionState"><i class="fa fa-save"></i> Submit</button>
-                            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i> Reset</button>
-                        </div>
+@{
+    ViewBag.Title = Model.ActionState == "I" ? "New Account" : "Edit Account";
 }
-                </div>
-            </div>
-            <!--/col-->
+
+@using (Html.BeginForm())
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            @ViewBag.Title
+            <small>
+                &nbsp;
+                <a href="@Url.Action("List", "Account")">
+                    <i class="fa fa-arrow-circle-left"></i>
+                    back to list
+                </a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="state" class="btn bg-blue" value="@Model.ActionState">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <a name="save" class="btn bg-red" href="@Url.Action("List", "Account")">
+                <i class="fa fa-undo"></i>
+                Cancel
+            </a>
         </div>
     </div>
-</main>
+    <div class="content">
+        <div class="form-horizontal">
+            <div id="customer-edit" class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info">Account Info</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-info">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="AccountId">
+                                                Account ID
+                                                <span class="ico-help" title="Account User Id">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(m => m.Account.AccountId, new { @class = "form-control", id = "AccountId" })                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="Name">
+                                                Name
+                                                <span class="ico-help" title="Complete name">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(m => m.Account.Name, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="Email">
+                                                Name
+                                                <span class="ico-help" title="email address">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(m => m.Account.Email, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="AccountTypeId">
+                                                Account Type
+                                                <span class="ico-help" title="Account type: ex: Client or Admin or Developer">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @(Html.Kendo().DropDownListFor(m => m.Account.AccountTypeId)
+                                                .Name("AccountTypeId")
+                                                .DataTextField("Description")
+                                                .DataValueField("Id")
+                                                .DataSource(source =>
+                                                {
+                                                    source.Read(read =>
+                                                    {
+                                                        read.Action("GetAccountType", "Account");
+                                                    });
+                                                })
+                                                .HtmlAttributes(new { @class = "form-control" })
+                                            )
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="ClientId">
+                                                Company Name
+                                                <span class="ico-help" title="Company where account belongs (Only for Client Account Type).">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @(Html.Kendo().DropDownListFor(m => m.Account.ClientId)
+                                                .Name("ClientId")
+                                                .DataTextField("Name")
+                                                .DataValueField("Id")
+                                                .DataSource(source =>
+                                                {
+                                                    source.Read(read =>
+                                                    {
+                                                        read.Action("GetClient", "Account");
+                                                    });
+                                                })
+                                                .HtmlAttributes(new { @class = "form-control input-sm" })
+                                            )
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="Phone">
+                                                Contact number
+                                                <span class="ico-help" title="Phone or mobile number">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Account.Phone, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="City">
+                                                City
+                                                <span class="ico-help" title="City">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Account.City, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 text-right">
+                                            <label class="control-label" for="Country">
+                                                Contact number
+                                                <span class="ico-help" title="Country">
+                                                    <i class="fa fa-question-circle"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Account.Country, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="CreatedDate" id="CreatedDate" value="@Model.Account.CreatedDate" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 
 <script>
     $(document).ready(function () {
-
+        var state = "@Model.ActionState";
+        if (state !== "I")
+            $("#AccountId").prop("disabled", true);
     });
 </script>

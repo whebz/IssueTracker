@@ -23,5 +23,7 @@ namespace IssueTracker.Service.Interface
         IEnumerable<Model.AccountType> GetAccountTypeList();
 
         IEnumerable<Model.ViewModel.AccountByType> GetAccountSummary();
+
+        string ChangePasword(string accountid, string password);
     }
 }

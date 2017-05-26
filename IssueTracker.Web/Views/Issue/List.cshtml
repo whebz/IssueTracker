@@ -9,47 +9,10 @@
         Issues
     </h1>
     <div class="pull-right">
-        <a href="#" class="btn bg-blue">
+        <a href="@Url.Action("IssueForm", "Issue")" class="btn bg-blue">
             <i class="fa fa-plus-square"></i>
             Add new
         </a>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success">
-                <i class="fa fa-download"></i>
-                Export
-            </button>
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">&nbsp;</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li>
-                    <button type="submit" name="exportxml-all">
-                        <i class="fa fa-file-code-o"></i>
-                        Export to XML (all found)
-                    </button>
-                </li>
-                <li>
-                    <button type="button" id="exportxml-selected">
-                        <i class="fa fa-file-code-o"></i>
-                        Export to XML (selected)
-                    </button>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <button type="submit" name="exportexcel-all">
-                        <i class="fa fa-file-excel-o"></i>
-                        Export to Excel (all found)
-                    </button>
-                </li>
-                <li>
-                    <button type="button" id="exportexcel-selected">
-                        <i class="fa fa-file-excel-o"></i>
-                        Export to Excel (selected)
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
 </div>
 <div class="content">
@@ -101,7 +64,7 @@
                                 <div class="col-md-4">
                                     <label for="IssuePriority">Priority</label>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-8">                                    
                                     @Html.DropDownList("IssuePriority", @Model.Priority, new { @class = "form-control", id = "IssuePriority", multiple = "multiple" })
                                 </div>
                             </div>
@@ -117,16 +80,22 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="grid-panel" style="margin-bottom:5px">
                 <div class="panel-body">
                     @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
                             .Name("grid")
                             .Columns(columns =>
                             {
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-secondary' onclick='edit(\"#= Id #\");'><span class='fa fa-edit' /></a><a class='btn btn-danger' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
-                                       .Title("").Width(100);
-                                columns.Bound(p => p.Title).Width(150);
+                                       .ClientTemplate("<a class='btn btn-default' onclick='edit(\"#= Id #\");'><span class='fa fa-edit' /></a>")
+                                       .Title("edit").Width(40);
+                                columns.Bound(p => p.Id)
+                                       .ClientTemplate("<a class='btn btn-danger' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
+                                       .Title("delete").Width(40);
+                                columns.Bound(p => p.Id)
+                                       .ClientTemplate("<a class='btn btn-info' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
+                                       .Title("view").Width(40);
+                                columns.Bound(p => p.Name).Width(150);
 
 
                                 columns.Bound(p => p.ProjectName).Width(180);
@@ -156,26 +125,47 @@
 
 
 <script>
+    var grid;
     $(document).ready(function () {
-        $('#IssueStatus').multiselect({ buttonWidth: '100%'});
+        $('#IssueStatus').multiselect({ buttonWidth: '100%' });
         $('#IssueClient').multiselect({ buttonWidth: '100%' });
         $('#IssueProject').multiselect({ buttonWidth: '100%' });
         $('#IssuePriority').multiselect({ buttonWidth: '100%' });
+        grid = $("#grid").data("kendoGrid");
+        setGridBlockSize();
     });
-    //$(document).ready(function () {
-    //    $(window).on('resize', function () {
-    //        setGridBlockSize();
-    //    });
-    //    setGridBlockSize();
-    //    grid = $("#grid").data("kendoGrid");
-    //});
-    //function setGridBlockSize() {
-    //    $("#grid-block").height($(window).height() - $(".app-header").outerHeight() - $(".breadcrumb").outerHeight() - $("#filter-row").outerHeight() - $(".app-footer").outerHeight() - 14);
-    //}
+    function setGridBlockSize() {
+        var h = ($(window).height() - $(".panel-search").outerHeight() - $(".content-header").outerHeight() -
+            $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 60);
+        $("#grid-panel").height(h);
+        $("#grid").height(h - 25);
+    }
     function gridWhere() {
 
         return {
 
         }
+    }
+        function destroyAccount(id) {
+        var r = confirm("Sei sicuro di voler cancellare l'account?");
+        if (r) {
+            $.ajax({
+                url: '@Url.Action("Account_Destroy", "Account")',
+                data: {id: id},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    alert(data)
+                },
+                complete: function () {
+                    grid.dataSource.read();
+                    grid.refresh();
+                }
+            });
+
+        }
+    }
+    function edit(id) {
+        document.location.href = '@Url.Action("IssueForm", "Issue")' + '?id=' + id;
     }
 </script>

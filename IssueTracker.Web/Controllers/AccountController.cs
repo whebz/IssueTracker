@@ -93,7 +93,13 @@ namespace IssueTracker.Web.Controllers
             list.AddRange(data);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult GetDevelopers()
+        {
+            var data = accountService.GetList().Where(c => c.AccountTypeId == "D");
+            var list = new List<Model.ViewModel.AccountViewModel> { new Model.ViewModel.AccountViewModel {  Name = "N/A" } };
+            list.AddRange(data);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult GetAccountType()
         {
             var data = accountService.GetAccountTypeList();

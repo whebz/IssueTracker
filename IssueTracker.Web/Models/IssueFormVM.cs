@@ -9,9 +9,6 @@ namespace IssueTracker.Web.Models
     {
         public Model.Issue Issue { get; set; }
         public string HeaderText { get; set; }
-        public IEnumerable<SelectListItem> AssignTo { get; set; }
-        public IEnumerable<SelectListItem> ProjectId { get; set; }        
-        public IEnumerable<SelectListItem> IssueStatus { get; set; }
-        public IEnumerable<SelectListItem> PriorityId { get; set; }
+        public string Author { get; set; }
     }
 }

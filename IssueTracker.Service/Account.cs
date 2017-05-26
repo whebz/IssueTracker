@@ -104,5 +104,19 @@ namespace IssueTracker.Service
             using (var sql = new SqlConnection(_cnstring))
                 return sql.Query<Model.ViewModel.AccountByType>("SELECT [AccountType], [Name], [Count] FROM AccountCountByType WIH (NOLOCK)", commandType: CommandType.Text);
         }
+
+        public string ChangePasword(string accountid, string password)
+        {
+            try
+            {
+                using (var sql = new SqlConnection(_cnstring))
+                    sql.Execute("AccountPasswordChange", new { @AccountId = accountid, @Password = password }, commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                return ex.InnerException?.Message ?? ex.Message;
+            }
+            return null;
+        }
     }
 }

@@ -40,6 +40,34 @@ namespace IssueTracker.Service
             return null;
         }
 
+        public string AssignTo(int id, string userId)
+        {
+            try
+            {
+                using (var sql = new SqlConnection(_cnstring))
+                    sql.Execute("IssueAssignTo", new { @Id = id, @AssignedTo = userId }, commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                return ex.InnerException?.Message ?? ex.Message;
+            }
+            return null;
+        }
+
+        public string Close(int id)
+        {
+            try
+            {
+                using (var sql = new SqlConnection(_cnstring))
+                    sql.Execute("IssueSetStatusClosed", new { @Id = id }, commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                return ex.InnerException?.Message ?? ex.Message;
+            }
+            return null;
+        }
+
         public string Delete(int id)
         {
             try
@@ -74,37 +102,29 @@ namespace IssueTracker.Service
 
         public IssueStatusSummary GetStatusStats(string accountId, string filter)
         {
-            List<IssueStatusStat> list;
+            IEnumerable<IssueViewModel> list = GetList(accountId, filter);
             var stat = new IssueStatusSummary();
-            using (var sql = new SqlConnection(_cnstring))
-                list = sql.Query<IssueStatusStat>(
-                    "IssueList",
-                    new { @AccountId = accountId, @filter = filter },
-                    commandType: CommandType.StoredProcedure).ToList();
-            if (list?.Count > 0)
+            list.ToList().ForEach(x =>
             {
-                list.ForEach(x =>
+                switch (x.StatusDescription)
                 {
-                    switch(x.Name)
-                    {
-                        case "Assigned":
-                            stat.Assigned = x.Count;
-                            break;
-                        case "Closed":
-                            stat.Closed = x.Count;
-                            break;
-                        case "NotAssigned":
-                            stat.NotAssigned = x.Count;
-                            break;
-                        case "OnProgress":
-                            stat.OnProgress = x.Count;
-                            break;
-                        case "Suspended":
-                            stat.Suspended = x.Count;
-                            break;
-                    }
-                });
-            }
+                    case "Assigned":
+                        stat.Assigned++;
+                        break;
+                    case "Closed":
+                        stat.Closed++;
+                        break;
+                    case "NotAssigned":
+                        stat.NotAssigned++;
+                        break;
+                    case "OnProgress":
+                        stat.OnProgress++;
+                        break;
+                    case "Suspended":
+                        stat.Suspended++;
+                        break;
+                }
+            });
             return stat;
         }
 

@@ -11,6 +11,7 @@
         <h1 class="pull-left">
             @Model.HeaderText
             <small>
+                &nbsp;
                 <a href="@Url.Action("List", "Issue")">
                     <i class="fa fa-arrow-circle-left"></i>
                     back to list
@@ -46,8 +47,8 @@
                                                     <label for="AssignTo">Author</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="hidden" name="CreateBy" id="CreateBy" value="@Model.Issue.CreateBy ?? ((User as IssueTracker.Web.Security.CustomPrincipal).Name)" />
-                                                    @((User as IssueTracker.Web.Security.CustomPrincipal).Name)
+                                                    <input type="hidden" name="CreateBy" id="CreateBy" value="@Model.Issue.CreateBy" />
+                                                    @Model.Author
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -55,7 +56,19 @@
                                                     <label for="ProjectId">Project</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    @Html.DropDownList("ProjectId", @Model.ProjectId, new { @class = "form-control", id = "ProjectId", style = "z-index:100" })
+                                                    @(Html.Kendo().DropDownListFor(m => m.Issue.ProjectId)
+                                                        .Name("ProjectId")
+                                                        .DataTextField("Name")
+                                                        .DataValueField("Id")
+                                                        .DataSource(source =>
+                                                        {
+                                                            source.Read(read =>
+                                                            {
+                                                                read.Action("GetClient", "Account");
+                                                            });
+                                                        })
+                                                        .HtmlAttributes(new { @class = "form-control" })
+                                                    )
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -63,7 +76,19 @@
                                                     <label for="AssignTo">Assign To</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    @Html.DropDownList("AssignTo", @Model.AssignTo, new { @class = "form-control", id = "AssignTo", })
+                                                    @(Html.Kendo().DropDownListFor(m => m.Issue.AssignedTo)
+                                                        .Name("AssignedTo")
+                                                        .DataTextField("Name")
+                                                        .DataValueField("AccountId")
+                                                        .DataSource(source =>
+                                                        {
+                                                            source.Read(read =>
+                                                            {
+                                                                read.Action("GetDevelopers", "Account");
+                                                            });
+                                                        })
+                                                        .HtmlAttributes(new { @class = "form-control" })
+                                                    )
                                                 </div>
                                             </div>
                                         </div>
@@ -73,7 +98,19 @@
                                                     <label for="IssueStatus">Status</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    @Html.DropDownList("IssueStatus", @Model.IssueStatus, new { @class = "form-control", id = "IssueStatus" })
+                                                    @(Html.Kendo().DropDownListFor(m => m.Issue.IssueStatus)
+                                                        .Name("IssueStatus")
+                                                        .DataTextField("Description")
+                                                        .DataValueField("Id")
+                                                        .DataSource(source =>
+                                                        {
+                                                            source.Read(read =>
+                                                            {
+                                                                read.Action("GetIssueStatusList", "Common");
+                                                            });
+                                                        })
+                                                        .HtmlAttributes(new { @class = "form-control" })
+                                                    )
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -81,7 +118,20 @@
                                                     <label for="PriorityId">Priority</label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    @Html.DropDownList("PriorityId", @Model.PriorityId, new { @class = "form-control", id = "PriorityId" })
+                                                    @(Html.Kendo().DropDownListFor(m => m.Issue.PriorityId)
+                                                        .Name("PriorityId")
+                                                        .DataTextField("Name")
+                                                        .DataValueField("Id")
+                                                        .DataSource(source =>
+                                                        {
+                                                            source.Read(read =>
+                                                            {
+                                                                read.Action("GetPriorityList", "Common");
+                                                            });
+                                                        })
+                                                        .HtmlAttributes(new { @class = "form-control" })
+                                                    )
+
                                                 </div>
                                             </div>
                                         </div>
@@ -104,13 +154,13 @@
                                         <div class="col-md-3 text-right">
                                             <label class="control-label" for="Title">
                                                 Subject
-                                                <span class="ico-help" title="The customer's email.">
+                                                <span class="ico-help" title="Issue name">
                                                     <i class="fa fa-question-circle"></i>
                                                 </span>
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            @Html.TextBox("Title", Model.Issue.Title, new { @class = "form-control" })
+                                            @Html.TextBox("Name", Model.Issue.Name, new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="panel panel-default">
@@ -143,7 +193,7 @@
                                                         .Print()
                                                         .ExportAs()
                                                     )
-                                                    .Value(@<text>@Model.Issue.Description</text>)
+                                                    .Value(@Model.Issue.Description)
                                                 )
                                             </div>
                                         </div>
@@ -156,6 +206,4 @@
             </div>
         </div>
     </div>
-
 }
-

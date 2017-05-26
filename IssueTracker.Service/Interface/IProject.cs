@@ -13,5 +13,6 @@ namespace IssueTracker.Service.Interface
         string Delete(int projectId);
 
         IEnumerable<Model.ViewModel.ClientProjectViewModel> GetProjectClientList(int projectId);
+        IEnumerable<Model.Project> GetList();
     }
 }

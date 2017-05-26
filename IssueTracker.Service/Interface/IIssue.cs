@@ -14,6 +14,8 @@ namespace IssueTracker.Service.Interface
         string Add(Model.Issue data);
         string Update(Model.Issue data);
         string Delete(int id);
+        string Close(int id);
+        string AssignTo(int id, string userId);
 
         Model.Issue GetById(int id);
     }

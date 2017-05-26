@@ -70,25 +70,18 @@ namespace IssueTracker.Web.Controllers
             var model = new Models.IssueFormVM()
             {
                 HeaderText = "New Issues",
-                IssueStatus = data.Status,
-                PriorityId = data.Priority,
-                ProjectId = data.Project,
-                AssignTo = new List<SelectListItem>(),
                 Issue = new Model.Issue()
             };
+            
             if (id.HasValue)
             {
                 model.HeaderText = "Edit Issue";
                 model.Issue = issueService.GetById(id.Value);
-                model.IssueStatus.FirstOrDefault(w => w.Value == model.Issue.IssueStatus).Selected = true;
-                model.PriorityId.FirstOrDefault(w => w.Value == model.Issue.PriorityId.ToString()).Selected = true;
-                model.ProjectId.FirstOrDefault(w => w.Value == model.Issue.ProjectId.ToString()).Selected = true;
-                model.AssignTo.FirstOrDefault(w => w.Value == model.Issue.AssignTo).Selected = true;
             }
             else
-            {
-                model.IssueStatus.First(w => w.Value == "N").Selected = true;
-            }
+                model.Issue.CreateBy = (User as CustomPrincipal).AccountId;
+            var account = accountService.GetById(model.Issue.CreateBy);
+            model.Author = account?.Name;
             return model;
         }
 

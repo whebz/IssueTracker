@@ -26,7 +26,6 @@
     <link href="~/wwwroot/plugins/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
     <link href="~/wwwroot/plugins/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
 
-    <link href="~/wwwroot/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,6 +43,7 @@
     <script src="~/wwwroot/plugins/kendo/js/jszip.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+    <input type="hidden" id="_role_" value="@((User as CustomPrincipal).AccountTypeId)" />
     <div class="wrapper">
         <header class="main-header">
             <!-- Logo -->
@@ -87,7 +87,7 @@
                         </li>
                         <!-- Logout Button -->
                         <li>
-                            <a href="#"><i class="fa fa-power-off"></i></a>
+                            <a href="@Url.Action("Signout", "Account")"><i class="fa fa-power-off"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -98,15 +98,11 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
+                <ul class="sidebar-menu" id="main-nav">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active" id="dashboard">
-                        <a href="#">
+                    <li id="dashboard">
+                        <a href="@Url.Action("", "Dashboard")">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                                
-                            </span>
                         </a>
                     </li>
                     <li id="issues">
@@ -120,7 +116,7 @@
                             <i class="fa fa-users"></i> <span>Accounts</span>
                         </a>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview" id="extra">
                         <a href="#">
                             <i class="fa fa-pie-chart"></i>
                             <span>Secondary data</span>
@@ -157,16 +153,25 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- Bootstrap 3.3.6 -->
-    <script src="~/wwwroot/bootstrap/js/bootstrap.min.js"></script>
-   
-    <!-- Slimscroll -->
-    <script src="~/wwwroot/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/wwwroot/plugins/fastclick/fastclick.js"></script>
-    <script src="~/wwwroot/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/wwwroot/AdminLTE/js/app.min.js"></script>
-    
+        <!--Bootstrap 3.3.6 -- >
+            <script src="~/wwwroot/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll -->
+        <script src="~/wwwroot/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="~/wwwroot/plugins/fastclick/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/wwwroot/AdminLTE/js/app.js"></script>
+        <script>
+            $(document).ready(function () {
+                var role = $("#_role_").val();
+                if (role !== "0") {
+                    $("#dashboard").hide();
+                    $("#accounts").hide();
+                    $("#extra").hide();
+                }
+                
+            });
+        </script>
 </body>
 </html>

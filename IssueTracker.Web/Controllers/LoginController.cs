@@ -21,7 +21,7 @@ namespace IssueTracker.Web.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View("Login");
+            return View();
         }
 
         [HttpPost]
@@ -51,9 +51,9 @@ namespace IssueTracker.Web.Controllers
                     if (!string.IsNullOrEmpty(returnUrl))
                         return Redirect(returnUrl);
                     if (uProfile.AccountTypeId == "0")
-                        return RedirectToAction("List", "Account");
+                        return RedirectToAction("", "Dashboard");
                     else
-                        return RedirectToAction("Issues", "Issue");
+                        return RedirectToAction("", "Issue");
                 }
                 ModelState.AddModelError("", "Incorrect username and/or password");
             }

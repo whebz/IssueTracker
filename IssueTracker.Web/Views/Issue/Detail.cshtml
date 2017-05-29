@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "IssueForm";
+}
+﻿@model IssueTracker.Model.ViewModel.IssueViewModel
+
+@using (Html.BeginForm())
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Issue
+            <small>
+                &nbsp;
+                <a href="@Url.Action("List", "Issue")">
+                    <i class="fa fa-arrow-circle-left"></i>
+                    back to list
+                </a>
+            </small>
+        </h1>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div id="customer-edit" class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info">Issue Info</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-info">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group" id="input-createby">
+                                                <div class="col-md-4">
+                                                    <label for="AssignTo">Author</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Model.CreateByName
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="ProjectId">Project</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    project name model
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="AssignTo">Assign To</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @(Html.Kendo().DropDownListFor(m => m.AssignedTo)
+                                                        .Name("AssignedTo")
+                                                        .DataTextField("Name")
+                                                        .DataValueField("AccountId")
+                                                        .DataSource(source =>
+                                                        {
+                                                            source.Read(read =>
+                                                            {
+                                                                read.Action("GetDevelopers", "Account");
+                                                            });
+                                                        })
+                                                        .HtmlAttributes(new { @class = "form-control" })
+                                                    )
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="IssueStatus">Status</label>
+                                                </div>
+                                                <div class="col-md-8">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="PriorityId">Priority</label>
+                                                </div>
+                                                <div class="col-md-8">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label for="IssueType">Type</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Model.IssueType
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">
+                                                        Name
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Model.Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <div class="col-md-2">
+                                                    <label class="control-label">
+                                                        Description
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Model.Description
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}d

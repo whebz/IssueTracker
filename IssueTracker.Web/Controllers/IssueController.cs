@@ -34,39 +34,26 @@ namespace IssueTracker.Web.Controllers
         // GET: Issue
         public ActionResult Index()
         {
-            var filter = GetListVM();
-            return View("List", filter);
+            return View("List");
         }
         // GET: Issue/List
         public ActionResult List()
         {
-            var filter = GetListVM();
-            return View(filter);
+            return View();
         }
 
-        private Models.IssueFilterFormVM GetListVM()
-        {
-            return new Models.IssueFilterFormVM(_cnString, (User as CustomPrincipal).ClientId);
-        }
         #region datagrid
-        public ActionResult Issues_Read([DataSourceRequest] DataSourceRequest request, Models.IssueListFilterVM filter)
+        public ActionResult Issues_Read([DataSourceRequest] DataSourceRequest request)
         {
             var usr = (User as CustomPrincipal).AccountId;
             return Json(issueService.GetList(usr, null).ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
         #endregion
 
-        public ActionResult GetStatusStats(Models.IssueListFilterVM filter)
-        {
-            var data = issueService.GetStatusStats(null, null);
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
         #region Form
 
         private Models.IssueFormVM GetFormData(int? id)
         {
-            var data = GetListVM();
             var model = new Models.IssueFormVM()
             {
                 HeaderText = "New Issues",
@@ -107,5 +94,12 @@ namespace IssueTracker.Web.Controllers
             return View(GetFormData(id));
         }
         #endregion
+
+        // GET: Issue
+        public ActionResult Detail(int id)
+        {
+            var m = issueService.GetById(id);
+            return View(m);
+        }
     }
 }

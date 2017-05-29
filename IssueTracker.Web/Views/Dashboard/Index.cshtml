@@ -1,7 +1,201 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
 }
+@model IssueTracker.Web.Models.DashboardVM
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Dashboard
+    </h1>
+</section>
 
-<h2>Index</h2>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Issues Stats Report</h3>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header" id="not-assigned">@Model.NotAssigned</h5>
+                                <span class="description-text">NOT ASSIGNED</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header" id="assigned">@Model.Assigned</h5>
+                                <span class="description-text">ASSIGNED</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header" id="suspended">@Model.Cancelled</h5>
+                                <span class="description-text">CANCELED</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block">
+                                <h5 class="description-header" id="closed">@Model.Closed</h5>
+                            <span class="description-text">CLOSED</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+        </div>
+    
+        </div>
+    </div>
+    <div class="row">
+        <!-- LATEST ISSUES -->
+        <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Latest Issues</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="latest-grid"></div>
+                    @*@(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
+                            .Name("grid")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(p => p.Id)
+                                       .ClientTemplate("<a class='btn btn-default' onclick='details(\"#= Id #\");'><span class='fa fa-remove' /></a>")
+                                       .Title("view").Width(40);
+                                columns.Bound(p => p.Name).Width(150);
 
+
+                                columns.Bound(p => p.ProjectName).Width(180);
+                                columns.Bound(p => p.AssignedToName).Width(180);
+                                columns.Bound(p => p.Priority).Width(60).ClientTemplate("<span class='priority-issue'>#: Priority #</span>");
+                                columns.Bound(p => p.IssueStatus).Width(100).ClientTemplate("<span class='priority-issue'>#: StatusDescription #</span>");
+
+                            })
+                            .Scrollable()
+                            .Sortable()
+                            .HtmlAttributes(new { style = "height: 500px" })
+                            .Pageable(pageable => pageable.Enabled(false))
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(20)
+                                .Read(read => read.Action("Latest_Issues_Read", "Dashboard"))
+                            )
+                    )*@
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <a href="@Url.Action("List", "Issue")" class="btn btn-sm btn-default btn-flat pull-right">View All Issues</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#main-nav #dashboard").addClass("active");
+    $("#latest-grid").kendoGrid({
+                    dataSource: {
+                        type: "json",
+                        transport: {
+                            read: {
+                                url: "@Html.Raw(Url.Action("Latest_Issues_Read", "Dashboard"))",
+                                type: "POST",
+                                dataType: "json"
+                            }
+                        },
+                        schema: {
+                            data: "Data",
+                            total: "Total",
+                            errors: "Errors"
+                        },
+                        error: function (e) {
+                            alert(e);
+                            // Cancel the changes
+                            this.cancelChanges();
+                        },
+                        pageSize: 20,
+                        serverPaging: true,
+                        serverFiltering: true,
+                        serverSorting: true
+                    },
+                    scrollable: false,
+                    columns: [
+                        {
+                            field: "Name",
+                            title: "Name",
+                            width: 120
+                        },
+                        {
+                            field: "ProjectName",
+                            title: "Project",
+                            width: 120
+                        },
+                        {
+                            field: "IssueStatus",
+                            title: "Status",
+                            width: 100,
+                            template: '<span class="label ' +
+                                                    '# if(IssueStatus == "N") {# label-default #} #' +
+                                                    '# if(IssueStatus == "A") {# label-info #} #' +
+                                                    '# if(IssueStatus == "C") {# label-success #} #' +
+                                                    '# if(IssueStatus == "S") {# label-danger #} #' +
+                                '">#=StatusDescription#</span>'
+                        },
+                        {
+                            field: "CreateByName",
+                            title: "Created by",
+                            width: 250,
+                            template: '#=CreateByName#'
+                        },
+                        {
+                            field: "AssignedToName",
+                            title: "Assigned to",
+                            width: 250,
+                            template: '#=AssignedToName#'
+                        },
+                        {
+                            field: "InsertDate",
+                            title: "Added On",
+                            width: 150,
+                            type: "date",
+                            format: "{0:G}"
+                        },
+                        {
+                            field: "Priority",
+                            title: "Priority",
+                            width: 100,
+                            template: '<span class="label ' +
+                            '# if(PriorityId == "1") {# label-default #} #' +
+                            '# if(PriorityId == "2") {# label-info #} #' +
+                            '# if(PriorityId == "3") {# label-warning #} #' +
+                            '# if(PriorityId == "4") {# label-danger #} #' +
+                            '">#=Priority#</span>'
+                        },
+                        {
+                            field: "Id",
+                            title: "View",
+                            width: 30,
+                            headerAttributes: { style: "text-align:center" },
+                            attributes: { style: "text-align:center" },
+                            template: '<a class="btn btn-xs btn-default" href="@Url.Content("~/Issue/Detail/")#=Id#"><i class="fa fa-eye"></i>&nbsp;view</a>'
+                        }
+                    ]
+                });
+            });
+
+</script>

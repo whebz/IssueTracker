@@ -21,6 +21,13 @@ namespace IssueTracker.Web.Controllers
 
         #endregion
 
+
+        // GET: Project
+        public ActionResult GetProjectListNoNA()
+        {
+            var data = projectService.GetList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         // GET: Project
         public ActionResult GetProjectList()
         {

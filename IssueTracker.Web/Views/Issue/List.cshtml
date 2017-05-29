@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "List";
 }
-@model IssueTracker.Web.Models.IssueFilterFormVM
 
 <!-- Content Header (Page header) -->
 <div class="content-header clearfix">
@@ -17,17 +16,31 @@
 </div>
 <div class="content">
     <div class="form-horizontal">
-        <div class="panel-group">
-            <div class="panel panel-default panel-search">
+        <div class="panel-group" style="margin-bottom: 0px;">
+            @* remove to use grid built in filter *@
+            @*<div class="panel panel-default panel-search">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label for="IssueStatus">Priority</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.DropDownList("IssueStatus", @Model.Status, new { @class = "form-control", id = "IssueStatus", multiple = "multiple" })
+                                    @(Html.Kendo().MultiSelect()
+                                              .Name("IssueStatus")
+                                              .DataTextField("Description")
+                                              .DataValueField("Id")
+                                              .DataSource(source =>
+                                              {
+                                                  source.Read(read =>
+                                                  {
+                                                      read.Action("GetIssueStatusList", "Common");
+                                                  });
+                                              })
+                                              .Height(400)
+                                              .HtmlAttributes(new { id = "IssueStatus" })
+                                    )
                                 </div>
                             </div>
                             <div class="form-group">
@@ -35,7 +48,20 @@
                                     <label for="IssueClient">Client</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.DropDownList("IssueClient", @Model.Client, new { @class = "form-control", id = "IssueClient", multiple = "multiple" })
+                                    @(Html.Kendo().MultiSelect()
+                                              .Name("IssueClient")
+                                              .DataTextField("Name")
+                                              .DataValueField("Id")
+                                              .DataSource(source =>
+                                              {
+                                                  source.Read(read =>
+                                                  {
+                                                      read.Action("GetClient", "Account");
+                                                  });
+                                              })
+                                              .Height(400)
+                                              .HtmlAttributes(new { id = "IssueClient" })
+                                    )
                                 </div>
                             </div>
                             <div class="form-group">
@@ -43,11 +69,24 @@
                                     <label for="IssueProject">Project</label>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.DropDownList("IssueProject", @Model.Project, new { @class = "form-control", id = "IssueProject", multiple = "multiple" })
+                                    @(Html.Kendo().MultiSelect()
+                                              .Name("IssueProject")
+                                              .DataTextField("Name")
+                                              .DataValueField("Id")
+                                              .DataSource(source =>
+                                              {
+                                                  source.Read(read =>
+                                                  {
+                                                      read.Action("GetProjectListNoNA", "Project");
+                                                  });
+                                              })
+                                              .Height(400)
+                                              .HtmlAttributes(new { id = "IssueProject" })
+                                    )
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label for="IssueStatus">Assigned Status</label>
@@ -64,22 +103,35 @@
                                 <div class="col-md-4">
                                     <label for="IssuePriority">Priority</label>
                                 </div>
-                                <div class="col-md-8">                                    
-                                    @Html.DropDownList("IssuePriority", @Model.Priority, new { @class = "form-control", id = "IssuePriority", multiple = "multiple" })
+                                <div class="col-md-8">
+                                    @(Html.Kendo().MultiSelect()
+                                              .Name("IssuePriority")
+                                              .DataTextField("Name")
+                                              .DataValueField("Id")
+                                              .DataSource(source =>
+                                              {
+                                                  source.Read(read =>
+                                                  {
+                                                      read.Action("GetPriorityList", "Common");
+                                                  });
+                                              })
+                                              .Height(400)
+                                              .HtmlAttributes(new { id = "IssuePriority" })
+                                    )
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-7 col-md-offset-5">
-                            <button type="button" id="search-orders" class="btn btn-primary btn-search">
+                            <button type="button" id="search-issues" class="btn btn-primary btn-search">
                                 <i class="fa fa-search"></i>
                                 Search
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="panel panel-default" id="grid-panel" style="margin-bottom:5px">
                 <div class="panel-body">
                     @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
@@ -87,23 +139,36 @@
                             .Columns(columns =>
                             {
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-default' onclick='edit(\"#= Id #\");'><span class='fa fa-edit' /></a>")
-                                       .Title("edit").Width(40);
+                                       .ClientTemplate("<a class='btn btn-xs btn-default' onclick='edit(\"#= Id #\");'><i class='fa fa-pencil'></i>&nbsp;edit</a>")
+                                       .Title("edit").Width(40).Filterable(false);
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-danger' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
-                                       .Title("delete").Width(40);
+                                       .ClientTemplate("<a class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
+                                       .Title("delete").Width(50).Filterable(false);
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-info' onclick='destroyAccount(\"#= Id #\");'><span class='fa fa-remove' /></a>")
-                                       .Title("view").Width(40);
+                                       .ClientTemplate("<a class='btn btn-xs btn-default' href='~/Issue/Detail/#=Id#'><i class='fa fa-eye'></i>&nbsp;view</a>")
+                                       .Title("view").Width(40).Filterable(false);
                                 columns.Bound(p => p.Name).Width(150);
 
 
                                 columns.Bound(p => p.ProjectName).Width(180);
                                 columns.Bound(p => p.AssignedToName).Width(180);
-                                columns.Bound(p => p.Priority).Width(60).ClientTemplate("<span class='priority-issue'>#: Priority #</span>");
-                                columns.Bound(p => p.IssueStatus).Width(100).ClientTemplate("<span class='priority-issue'>#: StatusDescription #</span>");
+                                columns.Bound(p => p.Priority).Width(60)
+                                .ClientTemplate(@"<span class='label 
+                                                    # if(PriorityId == 1) {# label-default #} #
+                                                    # if(PriorityId == 2) {# label-info #} #
+                                                    # if(PriorityId == 3) {# label-warning #} #
+                                                    # if(PriorityId == 4) {# label-danger #} #'>
+                                                        #=Priority#</span>");
+                                columns.Bound(p => p.IssueStatus).Width(100)
+                                .ClientTemplate(@"<span class='label 
+                                                    # if(IssueStatus == 'N') {# label-default #} #
+                                                    # if(IssueStatus == 'A') {# label-info #} #
+                                                    # if(IssueStatus == 'C') {# label-success #} #
+                                                    # if(IssueStatus == 'S') {# label-danger #} #'>
+                                                        #=StatusDescription#</span>");
 
                             })
+                            .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
                             .Scrollable()
                             .Sortable()
                             .HtmlAttributes(new { style = "height: 100%" })
@@ -114,7 +179,7 @@
                             .DataSource(dataSource => dataSource
                                 .Ajax()
                                 .PageSize(20)
-                                .Read(read => read.Action("Issues_Read", "Issue").Data("gridWhere"))
+                                .Read(read => read.Action("Issues_Read", "Issue"))
                             )
                     )
                 </div>
@@ -127,24 +192,20 @@
 <script>
     var grid;
     $(document).ready(function () {
-        $('#IssueStatus').multiselect({ buttonWidth: '100%' });
-        $('#IssueClient').multiselect({ buttonWidth: '100%' });
-        $('#IssueProject').multiselect({ buttonWidth: '100%' });
-        $('#IssuePriority').multiselect({ buttonWidth: '100%' });
         grid = $("#grid").data("kendoGrid");
         setGridBlockSize();
+        $("#main-nav #issues").addClass("active");
+
+        $("#search-issues").on('click', function () {
+            grid.dataSource.read();
+            grid.refresh();
+        });
     });
     function setGridBlockSize() {
-        var h = ($(window).height() - $(".panel-search").outerHeight() - $(".content-header").outerHeight() -
-            $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 60);
+        var h = ($(window).height() - $(".content-header").outerHeight() -
+            $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 40);
         $("#grid-panel").height(h);
         $("#grid").height(h - 25);
-    }
-    function gridWhere() {
-
-        return {
-
-        }
     }
         function destroyAccount(id) {
         var r = confirm("Sei sicuro di voler cancellare l'account?");

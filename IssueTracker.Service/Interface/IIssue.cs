@@ -9,8 +9,9 @@ namespace IssueTracker.Service.Interface
 {    
     public interface IIssue
     {
+        IEnumerable<IssueViewModel> GetLatest();
         IEnumerable<IssueViewModel> GetList(string accountId, string filter);
-        IssueStatusSummary GetStatusStats(string accountId, string filter);
+        IEnumerable<IssueStatusStat> GetStatusStats();
         string Add(Model.Issue data);
         string Update(Model.Issue data);
         string Delete(int id);

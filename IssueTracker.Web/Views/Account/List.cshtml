@@ -28,8 +28,8 @@
 
 <div class="content">
     <div class="form-horizontal">
-        <div class="panel-group">
-            <div class="panel panel-default panel-search">
+        <div class="panel-group" style="margin-bottom: 0px;">
+            @*<div class="panel panel-default panel-search">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-8">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="panel panel-default" id="grid-panel" style="margin-bottom:5px">
                 <div class="panel-body">
                     @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.AccountViewModel>()
@@ -101,9 +101,10 @@
     });
     function setGridBlockSize() {
         var h = ($(window).height() - $(".panel-search").outerHeight() - $(".content-header").outerHeight() -
-            $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 60);
+            $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 40);
         $("#grid-panel").height(h);
         $("#grid").height(h - 25);
+        $("#main-nav #accounts").addClass("active");
     }
     function destroyAccount(id) {
         var r = confirm("Sei sicuro di voler cancellare l'account?");

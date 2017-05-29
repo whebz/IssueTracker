@@ -91,6 +91,14 @@ namespace IssueTracker.Service
                     commandType: CommandType.StoredProcedure).FirstOrDefault();
         }
 
+        public IEnumerable<IssueViewModel> GetLatest()
+        {
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<IssueViewModel>(
+                    "IssueLatest",
+                    commandType: CommandType.StoredProcedure);
+        }
+
         public IEnumerable<IssueViewModel> GetList(string accountId, string filter)
         {
             using (var sql = new SqlConnection(_cnstring))
@@ -100,32 +108,12 @@ namespace IssueTracker.Service
                     commandType: CommandType.StoredProcedure);
         }
 
-        public IssueStatusSummary GetStatusStats(string accountId, string filter)
+        public IEnumerable<IssueStatusStat> GetStatusStats()
         {
-            IEnumerable<IssueViewModel> list = GetList(accountId, filter);
-            var stat = new IssueStatusSummary();
-            list.ToList().ForEach(x =>
-            {
-                switch (x.StatusDescription)
-                {
-                    case "Assigned":
-                        stat.Assigned++;
-                        break;
-                    case "Closed":
-                        stat.Closed++;
-                        break;
-                    case "NotAssigned":
-                        stat.NotAssigned++;
-                        break;
-                    case "OnProgress":
-                        stat.OnProgress++;
-                        break;
-                    case "Suspended":
-                        stat.Suspended++;
-                        break;
-                }
-            });
-            return stat;
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<IssueStatusStat>(
+                    "IssueStatistics",
+                    commandType: CommandType.StoredProcedure);
         }
 
         public string Update(Model.Issue data)

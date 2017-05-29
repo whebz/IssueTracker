@@ -118,7 +118,7 @@ namespace IssueTracker.Web.Controllers
         public ActionResult Signout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account", null);
+            return RedirectToAction("", "Login");
         }
 
         #region Partial Views

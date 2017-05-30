@@ -53,6 +53,13 @@ namespace IssueTracker.Web.Controllers
             return View("Editor/AccountEditor", data);
         }
 
+        public ActionResult MyProfile()
+        {
+            Models.AccountEditorVM data = new Models.AccountEditorVM { ActionState = "U", Account = accountService.GetById(User.Identity.Name) };
+            ViewBag.AccountSummary = accountService.GetAccountSummary();
+            return View("Editor/AccountEditor", data);
+        }
+
         [HttpPost]
         public ActionResult Edit(Model.Account data, string state)
         {

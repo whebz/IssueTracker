@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using cf = System.Configuration.ConfigurationManager;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+
 namespace IssueTracker.Web.Controllers
 {
     [Authorize]
@@ -21,7 +24,13 @@ namespace IssueTracker.Web.Controllers
 
         #endregion
 
-
+        #region datagrid
+        public ActionResult Project_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = projectService.GetList();
+            return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         // GET: Project
         public ActionResult GetProjectListNoNA()
         {

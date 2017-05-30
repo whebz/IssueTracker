@@ -37,5 +37,10 @@ namespace IssueTracker.Web.Controllers
             list.AddRange(data);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult List()
+        {
+            return View();
+        }
     }
 }

@@ -303,7 +303,6 @@
     <Content Include="wwwroot\plugins\slimScroll\jquery.slimscroll.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Common\" />
     <Folder Include="Views\Project\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
@@ -366,6 +365,7 @@
     <Content Include="wwwroot\plugins\kendo\styles\kendo.default.mobile.min.css.map" />
     <Content Include="wwwroot\plugins\bootstrap-multiselect\less\bootstrap-multiselect.less" />
     <Content Include="Views\Issue\Detail.cshtml" />
+    <Content Include="Views\Common\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">

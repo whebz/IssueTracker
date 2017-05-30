@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "List";
+}
+<style>
+    .k-tabstrip-wrapper {
+        margin-bottom: -20px!important;
+    }
+</style>
+<div class="content">
+
+    <div id="tabstrip" class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li>Projects</li>
+            <li>Clients</li>
+        </ul>
+        <div>
+            @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
+                .Name("grid-project")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id)
+                            .ClientTemplate("<a class='btn btn-xs btn-default' onclick='edit(\"#= Id #\");'><i class='fa fa-pencil'></i>&nbsp;edit</a>")
+                            .Title("edit").Width(70).Filterable(false);
+                    columns.Bound(p => p.Id)
+                            .ClientTemplate("<a class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
+                            .Title("delete").Width(80).Filterable(false);
+                    columns.Bound(p => p.Name);
+
+                })
+                .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
+                .Scrollable()
+                .Sortable()
+                .HtmlAttributes(new { style = "height: 100%" })
+                .Pageable(pageable => pageable
+                    .PageSizes(true)
+                    .ButtonCount(15)
+                )
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(20)
+                    .Read(read => read.Action("Project_Read", "Project"))
+                )
+            )
+        </div>
+        <div>
+            @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
+                .Name("grid-client")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id)
+                            .ClientTemplate("<a class='btn btn-xs btn-default' onclick='edit(\"#= Id #\");'><i class='fa fa-pencil'></i>&nbsp;edit</a>")
+                            .Title("edit").Width(70).Filterable(false);
+                    columns.Bound(p => p.Id)
+                            .ClientTemplate("<a class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
+                            .Title("delete").Width(80).Filterable(false);
+                    columns.Bound(p => p.Name);
+
+                })
+                .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
+                .Scrollable()
+                .Sortable()
+                .HtmlAttributes(new { style = "height: 100%" })
+                .Pageable(pageable => pageable
+                    .PageSizes(true)
+                    .ButtonCount(15)
+                )
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(20)
+                    .Read(read => read.Action("Project_Read", "Project"))
+                )
+            )
+        </div>
+    </div>
+
+    <script>
+        $("#tabstrip").kendoTabStrip({
+            collapsible: true
+        });
+
+        var resizeAll = function () {
+            expandContentDivs(tabStripElement.children(".k-content"));
+        }
+        function setGridBlockSize() {
+            
+        }
+        var tabStripElement = $("#tabstrip").kendoTabStrip({
+            animation: {
+                open: {
+                    effects: "fade"
+                }
+            }
+        });
+
+        tabStripElement.parent().attr("id", "tabstrip-parent");
+
+        var tabStrip = tabStripElement.data("kendoTabStrip");
+        var expandContentDivs = function (divs) {
+            var h = ($(window).height() -
+                $(".main-header").outerHeight() - $(".main-footer").outerHeight() - 55);
+            var visibleDiv = divs.filter(":visible");
+            h = h - tabStripElement.innerHeight() - 50;
+            divs.height(h);
+            $("#grid-project").height(h - 2);
+            // all of the above padding/margin/border calculations can be replaced by a single hard-coded number for improved performance
+        }
+
+        resizeAll();
+
+        $(window).resize(function () {
+            resizeAll();
+        });
+    </script>
+
+</div>

@@ -366,6 +366,7 @@
     <Content Include="wwwroot\plugins\bootstrap-multiselect\less\bootstrap-multiselect.less" />
     <Content Include="Views\Issue\Detail.cshtml" />
     <Content Include="Views\Common\List.cshtml" />
+    <Content Include="Views\Common\CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">

@@ -38,8 +38,15 @@ namespace IssueTracker.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult List()
+        public ActionResult List(int? idx)
         {
+            ViewBag.Index = idx ?? 0;
+            return View();
+        }
+
+        public ActionResult CreateOrEdit(int? idx)
+        {
+            ViewBag.Index = idx ?? 0;
             return View();
         }
     }

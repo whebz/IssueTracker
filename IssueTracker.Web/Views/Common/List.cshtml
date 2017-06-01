@@ -6,6 +6,10 @@
     .k-tabstrip-wrapper {
         margin-bottom: -20px!important;
     }
+    hr {
+        margin-bottom: 2px;
+        margin-top: 2px;
+    }
 </style>
 <div class="content">
 
@@ -15,6 +19,13 @@
             <li>Clients</li>
         </ul>
         <div>
+            <span id="add-project">
+                <a href="@Url.Action("CreateOrEdit", "Common")" class="btn bg-blue btn-sm">
+                    <i class="fa fa-plus-square"></i>
+                    Add new
+                </a>
+            </span>
+            <hr id="add-project-hr" />
             @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
                 .Name("grid-project")
                 .Columns(columns =>
@@ -31,7 +42,7 @@
                 .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
                 .Scrollable()
                 .Sortable()
-                .HtmlAttributes(new { style = "height: 100%" })
+                //.HtmlAttributes(new { style = "height: 100%" })
                 .Pageable(pageable => pageable
                     .PageSizes(true)
                     .ButtonCount(15)
@@ -41,9 +52,16 @@
                     .PageSize(20)
                     .Read(read => read.Action("Project_Read", "Project"))
                 )
-            )
-        </div>
+                )
+            </div>
         <div>
+            <span id="add-client">
+                <a href="@Url.Action("CreateOrEdit", "Common")" class="btn bg-blue btn-sm">
+                    <i class="fa fa-plus-square"></i>
+                    Add new
+                </a>
+            </span>
+            <hr id="add-client-hr" />
             @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
                 .Name("grid-client")
                 .Columns(columns =>
@@ -60,7 +78,7 @@
                 .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
                 .Scrollable()
                 .Sortable()
-                .HtmlAttributes(new { style = "height: 100%" })
+                //.HtmlAttributes(new { style = "height: 100%" })
                 .Pageable(pageable => pageable
                     .PageSizes(true)
                     .ButtonCount(15)
@@ -102,8 +120,9 @@
             var visibleDiv = divs.filter(":visible");
             h = h - tabStripElement.innerHeight() - 50;
             divs.height(h);
-            $("#grid-project").height(h - 2);
-            // all of the above padding/margin/border calculations can be replaced by a single hard-coded number for improved performance
+
+            $("#grid-project").height(h - $("#add-project").outerHeight() - $("#add-project-hr").outerHeight() - 38);
+            $("#grid-client").height(h - $("#add-client").outerHeight() - $("#add-client-hr").outerHeight() - 38);
         }
 
         resizeAll();
@@ -111,6 +130,7 @@
         $(window).resize(function () {
             resizeAll();
         });
+        tabStrip.select(@ViewBag.Index);  // Select by jQuery selector
     </script>
 
 </div>

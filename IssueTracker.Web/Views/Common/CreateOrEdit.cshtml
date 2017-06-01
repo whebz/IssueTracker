@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "CreateOrEdit";
+}
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Create or edit
+        <small>
+            &nbsp;
+            <a href="#">
+                <i class="fa fa-arrow-circle-left"></i>
+                back to list
+            </a>
+        </small>
+    </h1>
+    <div class="pull-right">
+        <button type="submit" name="state" class="btn bg-blue" value="">
+            <i class="fa fa-floppy-o"></i>
+            Save
+        </button>
+        <a name="save" class="btn bg-red" href="@Url.Action("List", "Common", 0)">
+            <i class="fa fa-undo"></i>
+            Cancel
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div id="customer-edit" class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-tab-name="tab-info" data-toggle="tab" href="#tab-info">Issue Info</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-info">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group" id="input-createby">
+                                            <div class="col-md-4">
+                                                <label for="AssignTo">Author</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="hidden" name="Id" id="Id" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="ProjectId">Name</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" id="Name" name="Name" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

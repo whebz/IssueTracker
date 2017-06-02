@@ -64,7 +64,7 @@
                                                         {
                                                             source.Read(read =>
                                                             {
-                                                                read.Action("GetClient", "Account");
+                                                                read.Action("GetProjectList", "Project");
                                                             });
                                                         })
                                                         .HtmlAttributes(new { @class = "form-control" })
@@ -102,6 +102,7 @@
                                                         .Name("IssueStatus")
                                                         .DataTextField("Description")
                                                         .DataValueField("Id")
+                                                        .Value("N")
                                                         .DataSource(source =>
                                                         {
                                                             source.Read(read =>
@@ -109,7 +110,7 @@
                                                                 read.Action("GetIssueStatusList", "Common");
                                                             });
                                                         })
-                                                        .HtmlAttributes(new { @class = "form-control" })
+                                                        .HtmlAttributes(new { @class = "form-control", id = "IssueStatus" })
                                                     )
                                                 </div>
                                             </div>
@@ -181,4 +182,14 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            var role = $("#_role_").val();
+            var state = role !== "C";
+            var issueStatus = $("#IssueStatus").data("kendoDropDownList");
+            var AssignedTo = $("#AssignedTo").data("kendoDropDownList");
+            issueStatus.enable(state);
+            AssignedTo.enable(state);
+        });
+    </script>
 }

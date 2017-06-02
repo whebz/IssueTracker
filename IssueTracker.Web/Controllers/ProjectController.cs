@@ -9,6 +9,8 @@ using Kendo.Mvc.UI;
 
 namespace IssueTracker.Web.Controllers
 {
+    using Security;
+
     [Authorize]
     public class ProjectController : Controller
     {
@@ -40,9 +42,16 @@ namespace IssueTracker.Web.Controllers
         // GET: Project
         public ActionResult GetProjectList()
         {
-            var data = projectService.GetList();
+            var role = (User as CustomPrincipal).AccountTypeId;
+            IEnumerable<Model.Project> data = null;
+            if (role != "C")
+                data = projectService.GetList();
+            else
+                data = projectService.GetList((User as CustomPrincipal).ClientId);
+
             var list = new List<Model.Project> { new Model.Project { Id = 0, Name = "N/A" } };
             list.AddRange(data);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
     }

@@ -32,7 +32,9 @@ namespace IssueTracker.Service
 
         public Model.Client GetById(int clientId)
         {
-            return null;
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.QueryFirstOrDefault<Model.Client>("SELECT * FROM Client WIH (NOLOCK) Where Id = @Id", 
+                    commandType: CommandType.Text, param: new { @Id = clientId });
         }
 
         public string Add(Model.Client data)

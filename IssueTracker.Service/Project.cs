@@ -59,6 +59,14 @@ namespace IssueTracker.Service
                 return sql.Query<Model.Project>("ProjectList", commandType: CommandType.StoredProcedure);
         }
 
+        public IEnumerable<Model.Project> GetList(int clientId)
+        {
+            var p = new DynamicParameters();
+            p.Add("ClientId", clientId);
+            using (var sql = new SqlConnection(_cnstring))
+                return sql.Query<Model.Project>("ProjectList", p, commandType: CommandType.StoredProcedure);
+        }
+
         public IEnumerable<ClientProjectViewModel> GetProjectClientList(int projectId)
         {
             using (var sql = new SqlConnection(_cnstring))

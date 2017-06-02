@@ -139,33 +139,34 @@
                             .Columns(columns =>
                             {
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-xs btn-default' onclick='edit(\"#= Id #\");'><i class='fa fa-pencil'></i>&nbsp;edit</a>")
-                                       .Title("edit").Width(40).Filterable(false);
+                                       .ClientTemplate("<a id='edit-#= Id #' class='btn btn-xs btn-default' onclick='edit(\"#= Id #\");'><i class='fa fa-pencil'></i>&nbsp;edit</a>")
+                                       .Title("edit").Width(70).Filterable(false);
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
-                                       .Title("delete").Width(50).Filterable(false);
+                                       .ClientTemplate("<a id='delete-#= Id #' class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
+                                       .Title("delete").Width(80).Filterable(false);
                                 columns.Bound(p => p.Id)
                                        .ClientTemplate("<a class='btn btn-xs btn-default' href='~/Issue/Detail/#=Id#'><i class='fa fa-eye'></i>&nbsp;view</a>")
-                                       .Title("view").Width(40).Filterable(false);
+                                       .Title("view").Width(70).Filterable(false);
                                 columns.Bound(p => p.Name).Width(150);
 
 
                                 columns.Bound(p => p.ProjectName).Width(180);
                                 columns.Bound(p => p.AssignedToName).Width(180);
-                                columns.Bound(p => p.Priority).Width(60)
+                                columns.Bound(p => p.Priority).Width(100)
                                 .ClientTemplate(@"<span class='label 
                                                     # if(PriorityId == 1) {# label-default #} #
                                                     # if(PriorityId == 2) {# label-info #} #
                                                     # if(PriorityId == 3) {# label-warning #} #
                                                     # if(PriorityId == 4) {# label-danger #} #'>
                                                         #=Priority#</span>");
-                                columns.Bound(p => p.IssueStatus).Width(100)
+                                columns.Bound(p => p.IssueStatus).Width(120)
                                 .ClientTemplate(@"<span class='label 
                                                     # if(IssueStatus == 'N') {# label-default #} #
                                                     # if(IssueStatus == 'A') {# label-info #} #
                                                     # if(IssueStatus == 'C') {# label-success #} #
                                                     # if(IssueStatus == 'S') {# label-danger #} #'>
                                                         #=StatusDescription#</span>");
+                                columns.Bound(p => p.Description);
 
                             })
                             .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
@@ -181,6 +182,10 @@
                                 .PageSize(20)
                                 .Read(read => read.Action("Issues_Read", "Issue"))
                             )
+                            .Events(e =>
+                            {
+                                e.DataBound("onDataBound");
+                            })
                     )
                 </div>
             </div>
@@ -200,6 +205,9 @@
             grid.dataSource.read();
             grid.refresh();
         });
+        var role = $("#_role_").val();
+        if (role === "C")
+            grid.hideColumn(2);
     });
     function setGridBlockSize() {
         var h = ($(window).height() - $(".content-header").outerHeight() -
@@ -207,12 +215,29 @@
         $("#grid-panel").height(h);
         $("#grid").height(h - 25);
     }
-        function destroyAccount(id) {
+    function onDataBound(e) {
+        grid = grid || $("#grid").data("kendoGrid");
+        var gridData = grid.dataSource.view();
+        var loggedUser = $("#_usr_").val();
+
+        for (var i = 0; i < gridData.length; i++) {
+            var currentUid = gridData[i].uid;
+            var dItem = gridData[i];
+            if (dItem.CreateBy !== loggedUser) {
+                var currenRow = grid.table.find("tr[data-uid='" + currentUid + "']");
+                var editButton = $(currenRow).find("#edit-" + dItem.Id);
+                editButton.hide();
+                var deleteButton = $(currenRow).find("#delete-" + dItem.Id);
+                deleteButton.hide();
+            }
+        }
+    }
+    function destroyAccount(id) {
         var r = confirm("Sei sicuro di voler cancellare l'account?");
         if (r) {
             $.ajax({
-                url: '@Url.Action("Account_Destroy", "Account")',
-                data: {id: id},
+                url: '@Url.Action("Issue_Destroy", "Issue")',
+                data: { id: id },
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
@@ -229,4 +254,15 @@
     function edit(id) {
         document.location.href = '@Url.Action("IssueForm", "Issue")' + '?id=' + id;
     }
+
+    // tooltip for issue description
+    $("#grid").kendoTooltip({
+        filter: "td:last-child()", //this filter selects the second column's cells
+        position: "right",
+        content: function (e) {
+            var dataItem = $("#grid").data("kendoGrid").dataItem(e.target.closest("tr"));
+            var content = dataItem.Description;
+            return content;
+        }
+    }).data("kendoTooltip");
 </script>

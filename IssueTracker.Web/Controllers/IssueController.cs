@@ -16,8 +16,8 @@ namespace IssueTracker.Web.Controllers
     public class IssueController : Controller
     {
         private Service.Interface.IAccount accountService;
-        private Service.Interface.IClient clientService;
         private Service.Interface.IIssue issueService;
+
         private readonly string _cnString;
         #region ctor
 
@@ -25,7 +25,6 @@ namespace IssueTracker.Web.Controllers
         {
             _cnString = cf.AppSettings["active-cn"];
             accountService = new Service.Account(_cnString);
-            clientService = new Service.Client(_cnString);
             issueService = new Service.Issue(_cnString);
         }
 
@@ -47,6 +46,12 @@ namespace IssueTracker.Web.Controllers
         {
             var usr = (User as CustomPrincipal).AccountId;
             return Json(issueService.GetList(usr, null).ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Issue_Destroy(int id)
+        {
+            return Json(issueService.Delete(id), JsonRequestBehavior.AllowGet);
         }
         #endregion
 

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.Web", "IssueTr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.Model", "IssueTracker.Model\IssueTracker.Model.csproj", "{E7BAD3C9-7CFD-4B16-B6DC-9AE3E5E313F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.Core", "IssueTracker.Core\IssueTracker.Core.csproj", "{477508C5-20BC-4AA8-902D-2D85FFBA707F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.Service", "IssueTracker.Service\IssueTracker.Service.csproj", "{5CF2BB8A-CD9C-4BF6-A767-A8383A73BB9C}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{E7BAD3C9-7CFD-4B16-B6DC-9AE3E5E313F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7BAD3C9-7CFD-4B16-B6DC-9AE3E5E313F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7BAD3C9-7CFD-4B16-B6DC-9AE3E5E313F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{477508C5-20BC-4AA8-902D-2D85FFBA707F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{477508C5-20BC-4AA8-902D-2D85FFBA707F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{477508C5-20BC-4AA8-902D-2D85FFBA707F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{477508C5-20BC-4AA8-902D-2D85FFBA707F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CF2BB8A-CD9C-4BF6-A767-A8383A73BB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CF2BB8A-CD9C-4BF6-A767-A8383A73BB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CF2BB8A-CD9C-4BF6-A767-A8383A73BB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU

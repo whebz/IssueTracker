@@ -146,6 +146,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountEditorVM.cs" />
+    <Compile Include="Models\CommonFormVM.cs" />
     <Compile Include="Models\DashboardVM.cs" />
     <Compile Include="Models\IssueFormVM.cs" />
     <Compile Include="Models\IssueListFilterVM.cs" />
@@ -369,10 +370,6 @@
     <Content Include="Views\Common\CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IssueTracker.Core\IssueTracker.Core.csproj">
-      <Project>{477508c5-20bc-4aa8-902d-2d85ffba707f}</Project>
-      <Name>IssueTracker.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\IssueTracker.Model\IssueTracker.Model.csproj">
       <Project>{e7bad3c9-7cfd-4b16-b6dc-9ae3e5e313f7}</Project>
       <Name>IssueTracker.Model</Name>

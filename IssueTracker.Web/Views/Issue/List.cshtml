@@ -145,7 +145,7 @@
                                        .ClientTemplate("<a id='delete-#= Id #' class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
                                        .Title("delete").Width(80).Filterable(false);
                                 columns.Bound(p => p.Id)
-                                       .ClientTemplate("<a class='btn btn-xs btn-default' href='~/Issue/Detail/#=Id#'><i class='fa fa-eye'></i>&nbsp;view</a>")
+                                       .ClientTemplate("<a class='btn btn-xs btn-default' href='Detail/#=Id#'><i class='fa fa-eye'></i>&nbsp;view</a>")
                                        .Title("view").Width(70).Filterable(false);
                                 columns.Bound(p => p.Name).Width(150);
 

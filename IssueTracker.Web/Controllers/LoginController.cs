@@ -25,7 +25,7 @@ namespace IssueTracker.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Web.Models.Login model, string returnUrl = "")
+        public ActionResult Index(Web.Models.Login model, string returnUrl = "")
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,8 @@ namespace IssueTracker.Web.Controllers
                     else
                         return RedirectToAction("", "Issue");
                 }
-                ModelState.AddModelError("", "Incorrect username and/or password");
+                ViewBag.ErrorMsg = "Incorrect username and/or password";
+                //ModelState.AddModelError("", "Incorrect username and/or password");
             }
 
             return View(model);

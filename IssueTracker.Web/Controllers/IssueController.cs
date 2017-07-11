@@ -85,14 +85,20 @@ namespace IssueTracker.Web.Controllers
         [HttpPost]
         public ActionResult IssueForm(Model.Issue data, string state)
         {
+            var role = (User as CustomPrincipal).AccountTypeId;
+
             string resp = null;
             if (state == "I")
+            {
+                if (role == "C" && data.IssueStatus == null)
+                    data.IssueStatus = "N";
                 resp = issueService.Add(data);
+            }
             else
                 resp = issueService.Update(data);
             if (string.IsNullOrEmpty(resp))
                 return RedirectToAction("List", "Issue");
-            ViewBag.ErrMsg = resp;
+            ViewBag.ErrMsg = System.Text.RegularExpressions.Regex.Replace(resp, @"\r\n?|\n|\t|'", " ");
             int? id = null;
             if (data.Id > 0)
                 id = data.Id;
@@ -105,6 +111,16 @@ namespace IssueTracker.Web.Controllers
         {
             var m = issueService.GetById(id);
             return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult Detail(Model.ViewModel.IssueViewModel data)
+        {
+            var err = issueService.AssignTo(data.Id, data.AssignedTo, data.Description);
+            if (string.IsNullOrEmpty(err))
+                return RedirectToAction("List", "Issue");
+            ViewBag.ErrMsg = System.Text.RegularExpressions.Regex.Replace(err, @"\r\n?|\n|\t|'", " ");
+            return View(issueService.GetById(data.Id));
         }
     }
 }

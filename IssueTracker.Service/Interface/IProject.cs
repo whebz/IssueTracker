@@ -11,9 +11,6 @@ namespace IssueTracker.Service.Interface
         string Add(Model.Project data);
         string Update(Model.Project data);
         string Delete(int projectId);
-
-        IEnumerable<Model.ViewModel.ClientProjectViewModel> GetProjectClientList(int projectId);
         IEnumerable<Model.Project> GetList();
-        IEnumerable<Model.Project> GetList(int clientId);
     }
 }

@@ -40,12 +40,16 @@ namespace IssueTracker.Service
             return null;
         }
 
-        public string AssignTo(int id, string userId)
+        public string AssignTo(int id, string userId, string description)
         {
             try
             {
                 using (var sql = new SqlConnection(_cnstring))
-                    sql.Execute("IssueAssignTo", new { @Id = id, @AssignedTo = userId }, commandType: CommandType.StoredProcedure);
+                    sql.Execute(
+                        "IssueAssignTo",
+                        new { @Id = id, @AssignedTo = userId, @Description = description },
+                        commandType: CommandType.StoredProcedure
+                    );
             }
             catch (SqlException ex)
             {

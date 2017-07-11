@@ -44,11 +44,7 @@ namespace IssueTracker.Web.Controllers
         {
             var role = (User as CustomPrincipal).AccountTypeId;
             IEnumerable<Model.Project> data = null;
-            if (role != "C")
-                data = projectService.GetList();
-            else
-                data = projectService.GetList((User as CustomPrincipal).ClientId);
-
+            data = projectService.GetList();
             var list = new List<Model.Project> { new Model.Project { Id = 0, Name = "N/A" } };
             list.AddRange(data);
 

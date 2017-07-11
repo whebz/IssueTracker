@@ -67,16 +67,6 @@ namespace IssueTracker.Service
                 return sql.Query<Model.Project>("ProjectList", p, commandType: CommandType.StoredProcedure);
         }
 
-        public IEnumerable<ClientProjectViewModel> GetProjectClientList(int projectId)
-        {
-            using (var sql = new SqlConnection(_cnstring))
-                return sql.Query<ClientProjectViewModel>(
-                        "ClientProjectWithNames",
-                        new { @ProjectId = projectId },
-                        commandType: CommandType.StoredProcedure
-                );
-        }
-
         public string Update(Model.Project data)
         {
             try

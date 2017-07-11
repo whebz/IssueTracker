@@ -34,7 +34,7 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form class="form-horizontal form-material" method="post" action="Login/Login">
+            <form class="form-horizontal form-material" method="post" action="/Login/Index">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" name="UserId" id="UserId" placeholder="user id">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -62,5 +62,10 @@
     <script src="~/wwwroot/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap 3.3.6 -->
     <script src="~/wwwroot/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        var err = '@ViewBag.ErrorMsg'
+        if (err && err.length > 0)
+            alert(err);
+    </script>
 </body>
 </html>

@@ -45,7 +45,6 @@
     <Compile Include="Account.cs" />
     <Compile Include="Base\INSModel.cs" />
     <Compile Include="Client.cs" />
-    <Compile Include="ClientProject.cs" />
     <Compile Include="Issue.cs" />
     <Compile Include="IssueStatus.cs" />
     <Compile Include="IssueType.cs" />
@@ -54,7 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AccountByType.cs" />
-    <Compile Include="ViewModel\ClientProjectViewModel.cs" />
     <Compile Include="ViewModel\IssueStatusStat.cs" />
     <Compile Include="ViewModel\IssueStatusSummary.cs" />
     <Compile Include="ViewModel\IssueViewModel.cs" />

@@ -78,53 +78,5 @@ namespace IssueTracker.Service
             }
             return null;
         }
-
-        public IEnumerable<ClientProjectViewModel> GetClientProjectList(int clientId)
-        {
-            using (var sql = new SqlConnection(_cnstring))
-                return sql.Query<ClientProjectViewModel>(
-                        "ClientProjectWithNames", 
-                        new { @ClientId = clientId }, 
-                        commandType: CommandType.StoredProcedure
-                );
-        }
-
-        public ClientProjectViewModel GetItem(ClientProject data)
-        {
-            using (var sql = new SqlConnection(_cnstring))
-                return sql.Query<ClientProjectViewModel>(
-                        "ClientProjectWithNames",
-                        data,
-                        commandType: CommandType.StoredProcedure
-                ).FirstOrDefault();
-        }
-
-        public string AddClientProject(ClientProject data)
-        {
-            try
-            {
-                using (var sql = new SqlConnection(_cnstring))
-                    sql.Execute("ClientProjectAdd", data, commandType: CommandType.StoredProcedure);
-            }
-            catch (SqlException ex)
-            {
-                return ex.InnerException?.Message ?? ex.Message;
-            }
-            return null;
-        }
-
-        public string DeleteClientProject(ClientProject data)
-        {
-            try
-            {
-                using (var sql = new SqlConnection(_cnstring))
-                    sql.Execute("ClientProjectDelete", data, commandType: CommandType.StoredProcedure);
-            }
-            catch (SqlException ex)
-            {
-                return ex.InnerException?.Message ?? ex.Message;
-            }
-            return null;
-        }
     }
 }

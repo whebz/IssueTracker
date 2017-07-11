@@ -17,121 +17,7 @@
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group" style="margin-bottom: 0px;">
-            @* remove to use grid built in filter *@
-            @*<div class="panel panel-default panel-search">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="IssueStatus">Priority</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @(Html.Kendo().MultiSelect()
-                                              .Name("IssueStatus")
-                                              .DataTextField("Description")
-                                              .DataValueField("Id")
-                                              .DataSource(source =>
-                                              {
-                                                  source.Read(read =>
-                                                  {
-                                                      read.Action("GetIssueStatusList", "Common");
-                                                  });
-                                              })
-                                              .Height(400)
-                                              .HtmlAttributes(new { id = "IssueStatus" })
-                                    )
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="IssueClient">Client</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @(Html.Kendo().MultiSelect()
-                                              .Name("IssueClient")
-                                              .DataTextField("Name")
-                                              .DataValueField("Id")
-                                              .DataSource(source =>
-                                              {
-                                                  source.Read(read =>
-                                                  {
-                                                      read.Action("GetClient", "Account");
-                                                  });
-                                              })
-                                              .Height(400)
-                                              .HtmlAttributes(new { id = "IssueClient" })
-                                    )
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="IssueProject">Project</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @(Html.Kendo().MultiSelect()
-                                              .Name("IssueProject")
-                                              .DataTextField("Name")
-                                              .DataValueField("Id")
-                                              .DataSource(source =>
-                                              {
-                                                  source.Read(read =>
-                                                  {
-                                                      read.Action("GetProjectListNoNA", "Project");
-                                                  });
-                                              })
-                                              .Height(400)
-                                              .HtmlAttributes(new { id = "IssueProject" })
-                                    )
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="IssueStatus">Assigned Status</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <select id="IssueAssigned" name="IssueAssigned" class="form-control input-sm" style="width:120px!important" size="1">
-                                        <option value="0">All</option>
-                                        <option value="1">Not Assigned</option>
-                                        <option value="2">Assigned</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="IssuePriority">Priority</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @(Html.Kendo().MultiSelect()
-                                              .Name("IssuePriority")
-                                              .DataTextField("Name")
-                                              .DataValueField("Id")
-                                              .DataSource(source =>
-                                              {
-                                                  source.Read(read =>
-                                                  {
-                                                      read.Action("GetPriorityList", "Common");
-                                                  });
-                                              })
-                                              .Height(400)
-                                              .HtmlAttributes(new { id = "IssuePriority" })
-                                    )
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7 col-md-offset-5">
-                            <button type="button" id="search-issues" class="btn btn-primary btn-search">
-                                <i class="fa fa-search"></i>
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
+           
             <div class="panel panel-default" id="grid-panel" style="margin-bottom:5px">
                 <div class="panel-body">
                     @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
@@ -223,10 +109,12 @@
         for (var i = 0; i < gridData.length; i++) {
             var currentUid = gridData[i].uid;
             var dItem = gridData[i];
+            var currenRow = grid.table.find("tr[data-uid='" + currentUid + "']");
             if (dItem.CreateBy !== loggedUser) {
-                var currenRow = grid.table.find("tr[data-uid='" + currentUid + "']");
                 var editButton = $(currenRow).find("#edit-" + dItem.Id);
                 editButton.hide();
+            }
+            if (dItem.CreateBy !== loggedUser && role !== "0") {
                 var deleteButton = $(currenRow).find("#delete-" + dItem.Id);
                 deleteButton.hide();
             }

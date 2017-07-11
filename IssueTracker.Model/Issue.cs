@@ -15,6 +15,7 @@ namespace IssueTracker.Model
         public string AssignedTo { get; set; }
         public DateTime? InsertDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public DateTime? LastModified { get; set; }
         public int ProjectId { get; set; }
         public string IssueType { get; set; }
         public string IssueStatus { get; set; }

@@ -105,31 +105,6 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-4 text-right">
-                                            <label class="control-label" for="ClientId">
-                                                Company Name
-                                                <span class="ico-help" title="Company where account belongs (Only for Client Account Type).">
-                                                    <i class="fa fa-question-circle"></i>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            @(Html.Kendo().DropDownListFor(m => m.Account.ClientId)
-                                                .Name("ClientId")
-                                                .DataTextField("Name")
-                                                .DataValueField("Id")
-                                                .DataSource(source =>
-                                                {
-                                                    source.Read(read =>
-                                                    {
-                                                        read.Action("GetClient", "Account");
-                                                    });
-                                                })
-                                                .HtmlAttributes(new { @class = "form-control input-sm" })
-                                            )
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4 text-right">
                                             <label class="control-label" for="Phone">
                                                 Contact number
                                                 <span class="ico-help" title="Phone or mobile number">

@@ -44,7 +44,6 @@
     <Compile Include="Base\IDSModel.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="Base\INSModel.cs" />
-    <Compile Include="Client.cs" />
     <Compile Include="Issue.cs" />
     <Compile Include="IssueStatus.cs" />
     <Compile Include="IssueType.cs" />

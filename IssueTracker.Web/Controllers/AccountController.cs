@@ -15,7 +15,6 @@ namespace IssueTracker.Web.Controllers
     public class AccountController : Controller
     {
         private Service.Interface.IAccount accountService;
-        private Service.Interface.IClient clientService;
 
         #region ctor
 
@@ -23,20 +22,13 @@ namespace IssueTracker.Web.Controllers
         {
             var cn = cf.AppSettings["active-cn"];
             accountService = new Service.Account(cn);
-            clientService = new Service.Client(cn);
         }
 
         #endregion
-        private void PopulateClient()
-        {
-            var cli = clientService.GetList();
-            ViewData["Clients"] = cli;
-            ViewData["defaultClient"] = cli.First();
-        }
+
         // GET: Account/List
         public ActionResult List()
         {
-            PopulateClient();
             var data = accountService.GetAccountSummary();
             return View(data);
         }
@@ -93,13 +85,6 @@ namespace IssueTracker.Web.Controllers
             return Json("ID NULL", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetClient()
-        {
-            var data = clientService.GetList();
-            var list = new List<Model.Client> { new Model.Client { Id = -1, Name = "N/A" } };
-            list.AddRange(data);
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
         public ActionResult GetDevelopers()
         {
             var data = accountService.GetList().Where(c => c.AccountTypeId == "D");

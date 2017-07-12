@@ -16,7 +16,6 @@
     <div id="tabstrip" class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li>Projects</li>
-            <li>Clients</li>
         </ul>
         <div>
             <span id="add-project">
@@ -54,42 +53,6 @@
                 )
                 )
             </div>
-        <div>
-            <span id="add-client">
-                <a href="@Url.Action("CreateOrEdit", "Common", new { idx = 1})" class="btn bg-blue btn-sm">
-                    <i class="fa fa-plus-square"></i>
-                    Add new
-                </a>
-            </span>
-            <hr id="add-client-hr" />
-            @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.IssueViewModel>()
-                .Name("grid-client")
-                .Columns(columns =>
-                {
-                    columns.Bound(p => p.Id)
-                            .ClientTemplate("<a class='btn btn-xs btn-default' onclick='edit(\"#= Id #\");'><i class='fa fa-pencil'></i>&nbsp;edit</a>")
-                            .Title("edit").Width(70).Filterable(false);
-                    columns.Bound(p => p.Id)
-                            .ClientTemplate("<a class='btn btn-xs btn-danger' onclick='destroyAccount(\"#= Id #\");'><i class='fa fa-trash-o'></i>&nbsp;delete</a>")
-                            .Title("delete").Width(80).Filterable(false);
-                    columns.Bound(p => p.Name);
-
-                })
-                .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
-                .Scrollable()
-                .Sortable()
-                //.HtmlAttributes(new { style = "height: 100%" })
-                .Pageable(pageable => pageable
-                    .PageSizes(true)
-                    .ButtonCount(15)
-                )
-                .DataSource(dataSource => dataSource
-                    .Ajax()
-                    .PageSize(20)
-                    .Read(read => read.Action("Client_Read", "Common"))
-                )
-            )
-        </div>
     </div>
 
     <script>
@@ -122,7 +85,6 @@
             divs.height(h);
 
             $("#grid-project").height(h - $("#add-project").outerHeight() - $("#add-project-hr").outerHeight() - 38);
-            $("#grid-client").height(h - $("#add-client").outerHeight() - $("#add-client-hr").outerHeight() - 38);
         }
 
         resizeAll();

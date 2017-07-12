@@ -13,5 +13,6 @@ namespace IssueTracker.Model.ViewModel
         public string AssignedToName { get; set; }
         public string CreateByName { get; set; }
         public string ProjectName { get; set; }
+        public string IssueTypeName { get; set; }
     }
 }

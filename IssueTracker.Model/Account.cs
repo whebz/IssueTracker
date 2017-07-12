@@ -30,9 +30,5 @@ namespace IssueTracker.Model
         public string AccountTypeId { get; set; }
 
         public bool Suspended { get; set; }
-
-        public int ClientId { get; set; }
-
-        //public string Photo { get; set; }
     }
 }

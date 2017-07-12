@@ -13,44 +13,13 @@
             <i class="fa fa-plus-square"></i>
             Add new
         </a>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success">
-                <i class="fa fa-download"></i>
-                Export
-            </button>
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">&nbsp;</span>
-            </button>
-        </div>
     </div>
 </div>
 
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group" style="margin-bottom: 0px;">
-            @*<div class="panel panel-default panel-search">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="AccountName">Name</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" id="AccountName" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="button" id="search-orders" class="btn btn-primary btn-search">
-                                <i class="fa fa-search"></i>
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
+
             <div class="panel panel-default" id="grid-panel" style="margin-bottom:5px">
                 <div class="panel-body">
                     @(Html.Kendo().Grid<IssueTracker.Model.ViewModel.AccountViewModel>()
@@ -58,15 +27,14 @@
                             .Columns(columns =>
                             {
                                 columns.Bound(p => p.AccountId)
-                                       .ClientTemplate("<a class='btn btn-default' onclick='edit(\"#= AccountId #\");'><span class='fa fa-edit' /></a>")
-                                       .Title("edit").Width(40);
+                                       .ClientTemplate("<a class='btn btn-default btn-xs' onclick='edit(\"#= AccountId #\");'><span class='fa fa-edit' />edit</a>")
+                                       .Title("edit").Width(70);
                                 columns.Bound(p => p.AccountId)
-                                       .ClientTemplate("<a class='btn btn-danger' onclick='destroyAccount(\"#= AccountId #\");'><span class='fa fa-remove' /></a>")
-                                       .Title("delete").Width(40);
-                                columns.Bound(p => p.AccountId).Width(150);
+                                       .ClientTemplate("<a class='btn btn-danger btn-xs' onclick='destroyAccount(\"#= AccountId #\");'><span class='fa fa-remove' />delete</a>")
+                                       .Title("delete").Width(70);
+                                columns.Bound(p => p.AccountId).Width(180);
                                 columns.Bound(p => p.Name).Width(180);
                                 columns.Bound(p => p.AccountType).Width(180);
-                                columns.Bound(p => p.ClientName).Width(180);
 
                             })
                             .Scrollable()
@@ -77,11 +45,6 @@
                             )
                             .DataSource(dataSource => dataSource
                                 .Ajax()
-                                .Model(model =>
-                                {
-                                    model.Id(p => p.AccountId);
-                                    model.Field(p => p.ClientId).DefaultValue(ViewData["defaultClient"] as IssueTracker.Model.Client);
-                                })
                                 .PageSize(20)
                                 .Read(read => read.Action("Accounts_Read", "Account"))
                             )
